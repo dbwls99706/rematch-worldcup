@@ -1,6 +1,7 @@
 import { AlertTriangle, ArrowRight, Crosshair, Target, Users } from 'lucide-react'
-import { BY_ID, flag, getMatch, getTeam, useGame } from '../store/useGame'
+import { BY_ID, getMatch, getTeam, useGame } from '../store/useGame'
 import RadarChart from '../components/RadarChart'
+import Flag from '../components/Flag'
 
 export default function Briefing() {
   const matchId = useGame((s) => s.matchId)!
@@ -16,7 +17,8 @@ export default function Briefing() {
         <div>
           <span className="badge accent">프리매치 브리핑 · 스카우팅 리포트</span>
           <h1 className="brief-title">
-            {flag(home.nationCode)} {home.short} <span className="vs">vs</span> {away.short} {flag(away.nationCode)}
+            <Flag code={home.nationCode} size={26} /> {home.short} <span className="vs">vs</span> {away.short}{' '}
+            <Flag code={away.nationCode} size={26} />
           </h1>
           <p className="muted">
             {match.competition} · {match.date}
@@ -78,7 +80,7 @@ export default function Briefing() {
                   <Target size={12} /> 키플레이어
                 </span>
                 <div className="keyman-name">
-                  {flag(keyman.nation)} {keyman.name} <span className="dim">#{keyman.number}</span>
+                  <Flag code={keyman.nation} size={18} /> {keyman.name} <span className="dim">#{keyman.number}</span>
                 </div>
                 <div className="dim" style={{ fontSize: '.8rem' }}>
                   {keyman.positions.join(' / ')}

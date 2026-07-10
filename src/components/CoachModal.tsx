@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Check, Sparkles, X } from 'lucide-react'
 import type { CoachAdvice } from '../engine/aiCoach'
-import { flag } from '../data/teams'
+import Flag from './Flag'
 
 interface Props {
   advice: CoachAdvice
@@ -53,7 +53,7 @@ export default function CoachModal({ advice, onApply, onClose }: Props) {
           <div className="coach-keyman">
             <span className="badge accent">추천 키맨</span>
             <b>
-              {flag(advice.keyman.player.nation)} {advice.keyman.player.name}
+              <Flag code={advice.keyman.player.nation} size={15} /> {advice.keyman.player.name}
             </b>
             <span className="dim">{advice.keyman.note}</span>
           </div>

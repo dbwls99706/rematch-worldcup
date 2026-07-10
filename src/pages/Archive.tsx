@@ -1,10 +1,7 @@
 import { Trash2, TrendingUp } from 'lucide-react'
 import { useGame } from '../store/useGame'
 import { GRADE_COLOR } from '../engine/rating'
-
-const FLAGS: Record<string, string> = {
-  KR: '🇰🇷', GH: '🇬🇭', DE: '🇩🇪', IT: '🇮🇹', BR: '🇧🇷', AR: '🇦🇷', FR: '🇫🇷', UY: '🇺🇾',
-}
+import Flag from '../components/Flag'
 
 export default function Archive() {
   const archive = useGame((s) => s.archive)
@@ -81,7 +78,7 @@ export default function Archive() {
                   <div className="ai-comp dim">{a.competition}</div>
                   <div className="ai-scores">
                     <span className="ai-my">
-                      {FLAGS[a.homeCode] ?? ''} 나 {a.myScore[0]}:{a.myScore[1]}
+                      <Flag code={a.homeCode} size={14} /> 나 {a.myScore[0]}:{a.myScore[1]}
                     </span>
                     <span className="dim">
                       실제 {a.realScore[0]}:{a.realScore[1]}

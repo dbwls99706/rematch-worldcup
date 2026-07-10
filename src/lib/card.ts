@@ -3,8 +3,8 @@ import type { Grade } from '../engine/rating'
 interface CardData {
   homeName: string
   awayName: string
-  homeFlag: string
-  awayFlag: string
+  homeCode: string
+  awayCode: string
   myScore: [number, number]
   realScore: [number, number]
   grade: Grade
@@ -55,11 +55,13 @@ export function drawResultCard(d: CardData): Promise<Blob> {
     ctx.font = '800 54px Pretendard, sans-serif'
     wrapText(ctx, `"${d.headline}"`, center, 340, 940, 64)
 
-    // 스코어
+    // 팀 이름 + 국기
     ctx.font = '700 40px Pretendard, sans-serif'
-    ctx.fillStyle = 'rgba(255,255,255,0.85)'
-    ctx.fillText(`${d.homeFlag}  ${d.homeName}`, center - 200, 560)
-    ctx.fillText(`${d.awayName}  ${d.awayFlag}`, center + 200, 560)
+    ctx.fillStyle = 'rgba(255,255,255,0.9)'
+    ctx.fillText(d.homeName, center - 175, 560)
+    ctx.fillText(d.awayName, center + 175, 560)
+    drawFlag(ctx, d.homeCode, center - 175 - flagW(d.homeName, ctx) / 2 - 66, 528, 54, 36)
+    drawFlag(ctx, d.awayCode, center + 175 + flagW(d.awayName, ctx) / 2 + 12, 528, 54, 36)
 
     ctx.font = '900 150px Pretendard, sans-serif'
     ctx.fillStyle = '#ffffff'
@@ -94,6 +96,102 @@ export function drawResultCard(d: CardData): Promise<Blob> {
       else reject(new Error('toBlob failed'))
     }, 'image/png')
   })
+}
+
+function flagW(name: string, ctx: CanvasRenderingContext2D): number {
+  const prev = ctx.font
+  ctx.font = '700 40px Pretendard, sans-serif'
+  const w = ctx.measureText(name).width
+  ctx.font = prev
+  return w
+}
+
+// 간이 국기 렌더러 (SVG Flag 컴포넌트와 동일 팔레트)
+function drawFlag(ctx: CanvasRenderingContext2D, code: string, x: number, y: number, w: number, h: number) {
+  ctx.save()
+  const cx = x + w / 2
+  const cy = y + h / 2
+  const box = (fill: string, dx = 0, dy = 0, dw = w, dh = h) => {
+    ctx.fillStyle = fill
+    ctx.fillRect(x + dx, y + dy, dw, dh)
+  }
+  switch (code) {
+    case 'DE':
+      box('#111', 0, 0, w, h / 3)
+      box('#D00', 0, h / 3, w, h / 3)
+      box('#FFCE00', 0, (2 * h) / 3, w, h / 3)
+      break
+    case 'IT':
+      box('#fff'); box('#009246', 0, 0, w / 3); box('#CE2B37', (2 * w) / 3, 0, w / 3)
+      break
+    case 'FR':
+      box('#fff'); box('#0055A4', 0, 0, w / 3); box('#EF4135', (2 * w) / 3, 0, w / 3)
+      break
+    case 'GH':
+      box('#CE1126', 0, 0, w, h / 3)
+      box('#FCD116', 0, h / 3, w, h / 3)
+      box('#006B3F', 0, (2 * h) / 3, w, h / 3)
+      star(ctx, cx, cy, h * 0.16, '#111')
+      break
+    case 'BR':
+      box('#009C3B')
+      ctx.fillStyle = '#FFDF00'
+      ctx.beginPath()
+      ctx.moveTo(cx, y + h * 0.14)
+      ctx.lineTo(x + w * 0.86, cy)
+      ctx.lineTo(cx, y + h * 0.86)
+      ctx.lineTo(x + w * 0.14, cy)
+      ctx.closePath()
+      ctx.fill()
+      circle(ctx, cx, cy, h * 0.22, '#002776')
+      break
+    case 'AR':
+      box('#fff'); box('#74ACDF', 0, 0, w, h / 3); box('#74ACDF', 0, (2 * h) / 3, w, h / 3)
+      circle(ctx, cx, cy, h * 0.13, '#F6B40E')
+      break
+    case 'UY':
+      box('#fff')
+      for (let i = 0; i < 4; i++) box('#0038A8', 0, h * (0.22 + i * 0.22), w, h * 0.11)
+      box('#fff', 0, 0, w * 0.37, h * 0.55)
+      circle(ctx, x + w * 0.185, y + h * 0.275, h * 0.12, '#F6B40E')
+      break
+    case 'KR':
+      box('#fff')
+      ctx.save()
+      ctx.beginPath()
+      ctx.arc(cx, cy, h * 0.28, 0, Math.PI * 2)
+      ctx.clip()
+      box('#C60C30', 0, 0, w, h / 2)
+      box('#003478', 0, h / 2, w, h / 2)
+      ctx.restore()
+      break
+    default:
+      box('#64748b')
+  }
+  ctx.strokeStyle = 'rgba(255,255,255,0.3)'
+  ctx.lineWidth = 1.5
+  ctx.strokeRect(x, y, w, h)
+  ctx.restore()
+}
+
+function circle(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number, fill: string) {
+  ctx.fillStyle = fill
+  ctx.beginPath()
+  ctx.arc(cx, cy, r, 0, Math.PI * 2)
+  ctx.fill()
+}
+
+function star(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number, fill: string) {
+  ctx.fillStyle = fill
+  ctx.beginPath()
+  for (let i = 0; i < 5; i++) {
+    const a = (Math.PI / 2.5) * i - Math.PI / 2
+    const a2 = a + Math.PI / 5
+    ctx.lineTo(cx + r * Math.cos(a), cy + r * Math.sin(a))
+    ctx.lineTo(cx + r * 0.42 * Math.cos(a2), cy + r * 0.42 * Math.sin(a2))
+  }
+  ctx.closePath()
+  ctx.fill()
 }
 
 function wrapText(ctx: CanvasRenderingContext2D, text: string, x: number, y: number, maxWidth: number, lineHeight: number) {

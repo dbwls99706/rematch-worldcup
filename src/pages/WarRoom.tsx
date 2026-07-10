@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Play, RotateCcw, Sparkles, Users2, X } from 'lucide-react'
-import { BY_ID, flag, getMatch, getTeam, useGame } from '../store/useGame'
+import { BY_ID, getMatch, getTeam, useGame } from '../store/useGame'
+import Flag from '../components/Flag'
 import { FORMATIONS } from '../data/formations'
 import { FORMATION_NAMES } from '../data/formations'
 import { computePower } from '../engine/strength'
@@ -137,10 +138,10 @@ export default function WarRoom() {
         <div>
           <span className="badge accent">작전실 · 전술 보드</span>
           <h1 className="wr-title">
-            {flag(home.nationCode)} {home.name} <span className="dim">감독석</span>
+            <Flag code={home.nationCode} size={24} /> {home.name} <span className="dim">감독석</span>
           </h1>
           <p className="muted">
-            🎯 {match.goal} · 상대: {flag(away.nationCode)} {away.name}
+            🎯 {match.goal} · 상대: <Flag code={away.nationCode} size={15} /> {away.name}
           </p>
         </div>
         <div className="wr-head-actions">
@@ -198,14 +199,14 @@ export default function WarRoom() {
               <div className="section-title">선수 카드 {detB && '· 비교'}</div>
               <div className="detail-players">
                 <div className="detail-p" style={{ color: '#22c55e' }}>
-                  {flag(detA.nation)} {detA.name} <span className="dim">#{detA.number}</span>
+                  <Flag code={detA.nation} size={16} /> {detA.name} <span className="dim">#{detA.number}</span>
                   <div className="dim" style={{ fontSize: '.75rem' }}>
                     {detA.positions.join(' / ')}
                   </div>
                 </div>
                 {detB && (
                   <div className="detail-p" style={{ color: '#f59e0b' }}>
-                    {flag(detB.nation)} {detB.name} <span className="dim">#{detB.number}</span>
+                    <Flag code={detB.nation} size={16} /> {detB.name} <span className="dim">#{detB.number}</span>
                     <div className="dim" style={{ fontSize: '.75rem' }}>
                       {detB.positions.join(' / ')}
                     </div>
@@ -359,7 +360,7 @@ function SquadCard({
       <span className="sc-num">{player.number}</span>
       <div className="sc-main">
         <span className="sc-name">
-          {flag(player.nation)} {shortName(player.name)}
+          <Flag code={player.nation} size={13} /> {shortName(player.name)}
         </span>
         <span className="sc-pos">{player.positions.join(' · ')}</span>
       </div>

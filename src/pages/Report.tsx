@@ -1,9 +1,10 @@
 import { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Download, Home as HomeIcon, RotateCcw, Trophy } from 'lucide-react'
-import { flag, getMatch, getTeam, useGame } from '../store/useGame'
+import { getMatch, getTeam, useGame } from '../store/useGame'
 import { GRADE_COLOR } from '../engine/rating'
 import { drawResultCard } from '../lib/card'
+import Flag from '../components/Flag'
 
 export default function Report() {
   const matchId = useGame((s) => s.matchId)!
@@ -29,8 +30,8 @@ export default function Report() {
       const blob = await drawResultCard({
         homeName: home.short,
         awayName: away.short,
-        homeFlag: flag(home.nationCode),
-        awayFlag: flag(away.nationCode),
+        homeCode: home.nationCode,
+        awayCode: away.nationCode,
         myScore: score,
         realScore: match.realScore,
         grade: rating.grade,
@@ -73,7 +74,7 @@ export default function Report() {
 
         <div className="report-scoreline">
           <div className="rs-team">
-            <span className="rs-flag">{flag(home.nationCode)}</span>
+            <Flag code={home.nationCode} size={34} />
             <span>{home.short}</span>
           </div>
           <div className="rs-score">
@@ -82,7 +83,7 @@ export default function Report() {
             <b>{score[1]}</b>
           </div>
           <div className="rs-team">
-            <span className="rs-flag">{flag(away.nationCode)}</span>
+            <Flag code={away.nationCode} size={34} />
             <span>{away.short}</span>
           </div>
         </div>

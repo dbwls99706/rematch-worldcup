@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { ChevronRight, Star, Trophy } from 'lucide-react'
-import { allMatches, flag, getTeam, useGame } from '../store/useGame'
+import { allMatches, getTeam, useGame } from '../store/useGame'
+import Flag from '../components/Flag'
 
 export default function Home() {
   const selectMatch = useGame((s) => s.selectMatch)
@@ -80,7 +81,7 @@ export default function Home() {
                 <div className="mc-comp">{m.competition}</div>
                 <div className="mc-teams">
                   <div className="mc-team">
-                    <span className="mc-flag">{flag(home.nationCode)}</span>
+                    <Flag code={home.nationCode} size={30} />
                     <span className="mc-name">{home.short}</span>
                   </div>
                   <div className="mc-score">
@@ -89,7 +90,7 @@ export default function Home() {
                     <b>{m.realScore[1]}</b>
                   </div>
                   <div className="mc-team">
-                    <span className="mc-flag">{flag(away.nationCode)}</span>
+                    <Flag code={away.nationCode} size={30} />
                     <span className="mc-name">{away.short}</span>
                   </div>
                 </div>

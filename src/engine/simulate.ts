@@ -2,7 +2,6 @@ import type { Match, MatchStats, Player, SimEvent, Side, Tactics, TeamSetup } fr
 import { RNG } from './rng'
 import { computePower, type TeamPower } from './strength'
 import { applyMatrix, deriveMods, type TeamMods } from './tactics'
-import { FORMATIONS } from '../data/formations'
 import { getTeam } from '../data/teams'
 
 type ById = Record<string, Player>
@@ -441,5 +440,3 @@ export function buildAiSubPlan(cfg: EngineConfig): SubPlan[] {
   }
   return plan
 }
-
-export { FORMATIONS }

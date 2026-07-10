@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowLeftRight, FastForward, Flag, Pause, Play, Sliders } from 'lucide-react'
-import { BY_ID, flag, getMatch, getTeam, useGame } from '../store/useGame'
+import { ArrowLeftRight, FastForward, Flag as FlagIcon, Pause, Play, Sliders } from 'lucide-react'
+import { BY_ID, getMatch, getTeam, useGame } from '../store/useGame'
 import { FORMATIONS } from '../data/formations'
 import Pitch, { shortName } from '../components/Pitch'
+import Flag from '../components/Flag'
 import TacticsPanel from '../components/TacticsPanel'
 import type { SimEvent } from '../engine/types'
 
@@ -15,7 +16,6 @@ export default function Matchday() {
   const speed = useGame((s) => s.speed)
   const halftime = useGame((s) => s.halftime)
   const matchFinished = useGame((s) => s.matchFinished)
-  const subsUsed = useGame((s) => s.subsUsed)
 
   const play = useGame((s) => s.play)
   const pause = useGame((s) => s.pause)
@@ -70,7 +70,7 @@ export default function Matchday() {
       {/* 스코어보드 */}
       <div className="scoreboard">
         <div className="sb-team home">
-          <span className="sb-flag">{flag(home.nationCode)}</span>
+          <Flag code={home.nationCode} size={28} />
           <span className="sb-name">{home.short}</span>
         </div>
         <div className="sb-center">
@@ -85,7 +85,7 @@ export default function Matchday() {
         </div>
         <div className="sb-team away">
           <span className="sb-name">{away.short}</span>
-          <span className="sb-flag">{flag(away.nationCode)}</span>
+          <Flag code={away.nationCode} size={28} />
         </div>
       </div>
 
@@ -122,7 +122,7 @@ export default function Matchday() {
         <div className="md-side">
           <div className="panel md-feed">
             <div className="section-title">
-              <Flag size={13} /> 실시간 중계
+              <FlagIcon size={13} /> 실시간 중계
             </div>
             <div className="feed-scroll">
               <AnimatePresence initial={false}>
@@ -259,8 +259,6 @@ export default function Matchday() {
           </motion.div>
         </div>
       )}
-
-      <div className="subsUsed-hidden" style={{ display: 'none' }}>{subsUsed}</div>
     </div>
   )
 }
