@@ -234,6 +234,77 @@ export const PLAYERS: Player[] = [
   p('uru10_ignacio', '이그나시오 곤살레스', 'UY', 11, ['AM', 'LM'], [78, 78, 76, 68, 56, 66], 82, ['playmaker']),
   p('uru10_fernandez', '알바로 페르난데스', 'UY', 8, ['RW', 'AM'], [84, 72, 78, 66, 54, 64], 82, ['sprinter']),
   p('uru10_scotti', '스코티', 'UY', 14, ['CB', 'DM'], [72, 64, 54, 44, 78, 80], 82, []),
+
+  // ─────────────── 대한민국 2026 (vs 남아프리카공화국 · 가상 시나리오) ───────────────
+  p('kr26_johw', '조현우', 'KR', 21, ['GK'], [62, 64, 46, 20, 84, 78], 85, ['wall', 'clutch']),
+  p('kr26_seolyw', '설영우', 'KR', 15, ['RB', 'LB'], [88, 76, 80, 52, 76, 72], 88, ['engine', 'sprinter']),
+  p('kr26_kimmj', '김민재', 'KR', 4, ['CB'], [83, 76, 66, 48, 91, 88], 88, ['wall', 'aerial_threat', 'clutch']),
+  p('kr26_jungsh', '정승현', 'KR', 20, ['CB'], [74, 68, 56, 42, 82, 84], 84, ['aerial_threat']),
+  p('kr26_kimjs', '김진수', 'KR', 3, ['LB'], [82, 78, 76, 56, 76, 74], 84, ['set_piece', 'engine']),
+  p('kr26_park', '박용우', 'KR', 5, ['DM'], [72, 80, 70, 58, 80, 80], 86, ['ball_winner', 'engine']),
+  p('kr26_hwangib', '황인범', 'KR', 6, ['CM', 'DM'], [77, 86, 82, 72, 74, 74], 89, ['playmaker', 'engine']),
+  p('kr26_leejs', '이재성', 'KR', 17, ['AM', 'CM'], [78, 84, 82, 74, 70, 70], 87, ['engine', 'clutch']),
+  p('kr26_leeki', '이강인', 'KR', 18, ['AM', 'RW'], [79, 88, 90, 82, 54, 62], 84, ['playmaker', 'set_piece', 'clutch']),
+  p('kr26_son', '손흥민', 'KR', 7, ['LW', 'ST'], [89, 85, 88, 91, 46, 74], 84, ['counter_attacker', 'clutch', 'sprinter']),
+  p('kr26_chogs', '조규성', 'KR', 9, ['ST'], [77, 68, 72, 82, 46, 87], 84, ['aerial_threat', 'target_man']),
+  // bench
+  p('kr26_hwanghc', '황희찬', 'KR', 11, ['RW', 'ST'], [92, 74, 82, 81, 50, 78], 82, ['sprinter', 'counter_attacker']),
+  p('kr26_ohhg', '오현규', 'KR', 19, ['ST'], [86, 70, 76, 80, 48, 78], 84, ['sprinter', 'clutch']),
+  p('kr26_baejh', '배준호', 'KR', 22, ['AM', 'LW'], [85, 80, 86, 74, 52, 62], 84, ['sprinter', 'counter_attacker']),
+  p('kr26_honghs', '홍현석', 'KR', 16, ['CM'], [76, 80, 76, 68, 66, 68], 84, ['engine', 'playmaker']),
+  p('kr26_kimsg', '김승규', 'KR', 1, ['GK'], [58, 62, 44, 20, 80, 80], 83, ['wall']),
+
+  // ─────────────── 남아프리카공화국 2026 (vs 대한민국 · 가상 시나리오) ───────────────
+  p('rsa26_williams', '론웬 윌리엄스', 'ZA', 1, ['GK'], [66, 66, 48, 22, 84, 82], 85, ['wall', 'clutch']),
+  p('rsa26_mudau', '무다우', 'ZA', 2, ['RB'], [88, 70, 74, 48, 76, 76], 88, ['sprinter', 'engine']),
+  p('rsa26_kekana', '케카나', 'ZA', 5, ['CB'], [76, 68, 58, 44, 80, 82], 84, ['aerial_threat']),
+  p('rsa26_mvala', '음발라', 'ZA', 4, ['CB', 'DM'], [78, 70, 60, 50, 80, 84], 84, ['aerial_threat', 'ball_winner']),
+  p('rsa26_modiba', '모디바', 'ZA', 3, ['LB'], [86, 74, 74, 54, 74, 72], 86, ['engine', 'set_piece']),
+  p('rsa26_mokoena', '모케나', 'ZA', 8, ['DM', 'CM'], [76, 78, 72, 66, 80, 80], 88, ['ball_winner', 'set_piece']),
+  p('rsa26_sithole', '시톨레', 'ZA', 6, ['CM'], [78, 76, 74, 62, 74, 74], 86, ['engine']),
+  p('rsa26_zwane', '즈와네', 'ZA', 10, ['AM'], [78, 82, 84, 76, 58, 62], 82, ['playmaker', 'clutch']),
+  p('rsa26_tau', '퍼시 타우', 'ZA', 11, ['RW', 'AM'], [86, 80, 86, 78, 54, 64], 84, ['counter_attacker', 'sprinter', 'clutch']),
+  p('rsa26_foster', '라일 포스터', 'ZA', 9, ['ST'], [87, 68, 76, 80, 46, 80], 84, ['sprinter', 'counter_attacker']),
+  p('rsa26_mofokeng', '모포켕', 'ZA', 7, ['LW'], [89, 74, 86, 74, 48, 60], 82, ['sprinter', 'counter_attacker']),
+  // bench
+  p('rsa26_makgopa', '막고파', 'ZA', 17, ['ST'], [80, 66, 70, 76, 44, 82], 82, ['aerial_threat', 'target_man']),
+  p('rsa26_appollis', '아폴리스', 'ZA', 19, ['RW', 'LW'], [88, 74, 84, 70, 48, 58], 82, ['sprinter']),
+  p('rsa26_hlongwane', '흘롱와네', 'ZA', 20, ['ST', 'RW'], [90, 68, 78, 74, 46, 66], 84, ['sprinter', 'counter_attacker']),
+
+  // ─────────────── 대한민국 2014 (vs 알제리) ───────────────
+  p('kr14_jungsr', '정성룡', 'KR', 1, ['GK'], [60, 60, 44, 20, 78, 80], 83, ['wall']),
+  p('kr14_leey', '이용', 'KR', 2, ['RB'], [82, 68, 68, 46, 74, 74], 85, ['engine']),
+  p('kr14_kimyg', '김영권', 'KR', 5, ['CB'], [72, 68, 56, 44, 78, 80], 82, ['aerial_threat']),
+  p('kr14_hongjh', '홍정호', 'KR', 20, ['CB'], [74, 72, 58, 44, 80, 80], 82, ['aerial_threat', 'playmaker']),
+  p('kr14_yoonsy', '윤석영', 'KR', 12, ['LB'], [82, 72, 72, 48, 72, 68], 84, ['engine']),
+  p('kr14_koo', '기성용', 'KR', 16, ['CM', 'DM'], [70, 85, 76, 70, 72, 78], 86, ['playmaker', 'set_piece']),
+  p('kr14_hanky', '한국영', 'KR', 6, ['DM'], [72, 72, 64, 54, 78, 82], 88, ['ball_winner', 'engine']),
+  p('kr14_koojc', '구자철', 'KR', 13, ['AM', 'CM'], [74, 80, 78, 76, 62, 70], 84, ['clutch']),
+  p('kr14_leecy', '이청용', 'KR', 17, ['RW', 'AM'], [82, 78, 82, 72, 54, 62], 84, ['counter_attacker', 'sprinter']),
+  p('kr14_son', '손흥민', 'KR', 7, ['LW', 'ST'], [88, 78, 85, 85, 42, 70], 84, ['counter_attacker', 'clutch', 'sprinter']),
+  p('kr14_parkjy', '박주영', 'KR', 10, ['ST'], [76, 74, 74, 76, 44, 68], 80, ['clutch']),
+  // bench
+  p('kr14_kimsw', '김신욱', 'KR', 9, ['ST'], [66, 62, 62, 74, 42, 90], 80, ['aerial_threat', 'target_man']),
+  p('kr14_leegh', '이근호', 'KR', 11, ['ST', 'RW'], [86, 70, 76, 72, 48, 68], 84, ['sprinter', 'counter_attacker']),
+  p('kr14_kimbk', '김보경', 'KR', 19, ['AM', 'LW'], [78, 78, 78, 70, 54, 64], 82, ['playmaker']),
+  p('kr14_kimsg', '김승규', 'KR', 21, ['GK'], [58, 60, 44, 20, 78, 80], 82, ['wall']),
+
+  // ─────────────── 알제리 2014 (vs 대한민국) ───────────────
+  p('alg14_mbolhi', '음볼리', 'DZ', 23, ['GK'], [62, 62, 46, 22, 82, 80], 84, ['wall', 'clutch']),
+  p('alg14_mandi', '만디', 'DZ', 21, ['RB', 'CB'], [82, 74, 66, 46, 80, 80], 86, ['aerial_threat']),
+  p('alg14_halliche', '할리셰', 'DZ', 5, ['CB'], [72, 66, 56, 44, 80, 82], 82, ['aerial_threat']),
+  p('alg14_bougherra', '부게라', 'DZ', 15, ['CB'], [70, 68, 56, 46, 80, 84], 82, ['aerial_threat', 'wall']),
+  p('alg14_ghoulam', '굴람', 'DZ', 3, ['LB'], [84, 78, 76, 54, 74, 74], 86, ['engine', 'set_piece']),
+  p('alg14_medjani', '메드자니', 'DZ', 4, ['DM', 'CB'], [72, 70, 62, 52, 78, 82], 84, ['ball_winner']),
+  p('alg14_bentaleb', '벤탈렙', 'DZ', 17, ['CM', 'DM'], [74, 80, 74, 64, 74, 76], 86, ['playmaker', 'engine']),
+  p('alg14_taider', '타이데르', 'DZ', 8, ['CM'], [76, 78, 76, 72, 68, 74], 84, ['engine', 'set_piece']),
+  p('alg14_feghouli', '페굴리', 'DZ', 7, ['RW', 'AM'], [84, 80, 84, 76, 56, 70], 84, ['counter_attacker', 'sprinter']),
+  p('alg14_brahimi', '브라히미', 'DZ', 18, ['AM', 'LW'], [84, 82, 88, 76, 52, 62], 84, ['playmaker', 'clutch', 'sprinter']),
+  p('alg14_slimani', '슬리마니', 'DZ', 13, ['ST'], [82, 68, 74, 82, 46, 84], 84, ['aerial_threat', 'clutch', 'target_man']),
+  // bench
+  p('alg14_djabou', '자부', 'DZ', 14, ['AM', 'LW'], [80, 80, 84, 74, 50, 60], 82, ['clutch', 'set_piece']),
+  p('alg14_mahrez', '마레즈', 'DZ', 20, ['RW'], [86, 82, 90, 80, 46, 58], 82, ['sprinter', 'counter_attacker', 'clutch']),
+  p('alg14_soudani', '소우다니', 'DZ', 9, ['ST', 'LW'], [86, 68, 76, 76, 46, 80], 84, ['sprinter', 'aerial_threat']),
 ]
 
 // ── 조회 헬퍼 ──────────────────────────────────────────────────

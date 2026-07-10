@@ -88,6 +88,27 @@ const FLAGS: Record<string, JSX.Element> = {
       <circle cx="15" cy="10" r="2.1" fill="#F6B40E" />
     </>
   ),
+  // 남아프리카공화국 — 적/청 + 녹색 Y + 흑색 삼각(금 테두리)
+  ZA: (
+    <>
+      <rect width="30" height="10" fill="#DE3831" />
+      <rect y="10" width="30" height="10" fill="#002395" />
+      <rect y="5.5" width="30" height="9" fill="#fff" />
+      <rect y="7" width="30" height="6" fill="#007A4D" />
+      <polygon points="0,0 16,10 0,20" fill="#FFB915" />
+      <polygon points="0,2 12.5,10 0,18" fill="#111" />
+    </>
+  ),
+  // 알제리 — 녹/백 + 적색 초승달·별
+  DZ: (
+    <>
+      <rect width="15" height="20" fill="#006233" />
+      <rect x="15" width="15" height="20" fill="#fff" />
+      <circle cx="14.4" cy="10" r="4.4" fill="#D21034" />
+      <circle cx="16" cy="10" r="3.5" fill="#fff" />
+      <polygon points="18,7.4 18.7,9.5 20.9,9.5 19.1,10.8 19.8,12.9 18,11.6 16.2,12.9 16.9,10.8 15.1,9.5 17.3,9.5" fill="#D21034" />
+    </>
+  ),
   // 우루과이 — 백/청 줄무늬 + 태양 칸톤
   UY: (
     <>

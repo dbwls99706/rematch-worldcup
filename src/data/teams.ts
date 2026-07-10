@@ -218,6 +218,78 @@ export const TEAMS: Record<string, Team> = {
       tags: ['front_three', 'individual', 'solid'],
     },
   },
+  kr26: {
+    id: 'kr26',
+    name: '대한민국 2026',
+    short: '대한민국',
+    nationCode: 'KR',
+    color: '#c8102e',
+    defaultFormation: '4-2-3-1',
+    squad: [
+      'kr26_johw', 'kr26_seolyw', 'kr26_kimmj', 'kr26_jungsh', 'kr26_kimjs',
+      'kr26_park', 'kr26_hwangib', 'kr26_leejs', 'kr26_leeki', 'kr26_son',
+      'kr26_chogs', 'kr26_hwanghc', 'kr26_ohhg', 'kr26_baejh', 'kr26_honghs', 'kr26_kimsg',
+    ],
+    profile: {
+      style: '손흥민·이강인의 창의성과 김민재의 수비를 축으로 한 유럽파 세대',
+      maxFwPace: 92, buildup: 'mixed', fullbackJoin: 'high', aerialWeak: false,
+      tags: ['europe_based', 'creative', 'son_lee'],
+    },
+  },
+  rsa26: {
+    id: 'rsa26',
+    name: '남아프리카공화국 2026',
+    short: '남아공',
+    nationCode: 'ZA',
+    color: '#007a4d',
+    defaultFormation: '4-3-3',
+    squad: [
+      'rsa26_williams', 'rsa26_mudau', 'rsa26_kekana', 'rsa26_mvala', 'rsa26_modiba',
+      'rsa26_mokoena', 'rsa26_sithole', 'rsa26_zwane', 'rsa26_tau', 'rsa26_foster',
+      'rsa26_mofokeng', 'rsa26_makgopa', 'rsa26_appollis', 'rsa26_hlongwane',
+    ],
+    profile: {
+      style: '윌리엄스의 선방과 타우·모포켕의 빠른 측면 전환, 강한 조직력',
+      maxFwPace: 90, buildup: 'mixed', fullbackJoin: 'high', aerialWeak: false,
+      tags: ['pace', 'organized', 'counter', 'underrated'],
+    },
+  },
+  kr14: {
+    id: 'kr14',
+    name: '대한민국 2014',
+    short: '대한민국',
+    nationCode: 'KR',
+    color: '#c8102e',
+    defaultFormation: '4-2-3-1',
+    squad: [
+      'kr14_jungsr', 'kr14_leey', 'kr14_kimyg', 'kr14_hongjh', 'kr14_yoonsy',
+      'kr14_koo', 'kr14_hanky', 'kr14_koojc', 'kr14_leecy', 'kr14_son',
+      'kr14_parkjy', 'kr14_kimsw', 'kr14_leegh', 'kr14_kimbk', 'kr14_kimsg',
+    ],
+    profile: {
+      style: '기성용의 조율과 손흥민·이청용의 측면, 경험 부족한 젊은 수비진',
+      maxFwPace: 88, buildup: 'mixed', fullbackJoin: 'mid', aerialWeak: true,
+      tags: ['young_defense', 'wing', 'transition', 'fragile'],
+    },
+  },
+  alg14: {
+    id: 'alg14',
+    name: '알제리 2014',
+    short: '알제리',
+    nationCode: 'DZ',
+    color: '#007229',
+    defaultFormation: '4-3-3',
+    squad: [
+      'alg14_mbolhi', 'alg14_mandi', 'alg14_halliche', 'alg14_bougherra', 'alg14_ghoulam',
+      'alg14_medjani', 'alg14_bentaleb', 'alg14_taider', 'alg14_feghouli', 'alg14_brahimi',
+      'alg14_slimani', 'alg14_djabou', 'alg14_mahrez', 'alg14_soudani',
+    ],
+    profile: {
+      style: '브라히미·페굴리의 드리블과 슬리마니의 제공권, 빠른 역습과 세트피스',
+      maxFwPace: 86, buildup: 'mixed', fullbackJoin: 'high', aerialWeak: false,
+      tags: ['dribblers', 'aerial', 'transition', 'set_piece'],
+    },
+  },
 }
 
 export function getTeam(id: string): Team {
@@ -229,7 +301,7 @@ export function getTeam(id: string): Team {
 // 국가 코드 → 국기 이모지
 const FLAGS: Record<string, string> = {
   KR: '🇰🇷', GH: '🇬🇭', DE: '🇩🇪', IT: '🇮🇹', BR: '🇧🇷',
-  AR: '🇦🇷', FR: '🇫🇷', UY: '🇺🇾',
+  AR: '🇦🇷', FR: '🇫🇷', UY: '🇺🇾', ZA: '🇿🇦', DZ: '🇩🇿',
 }
 export function flag(nationCode: string): string {
   return FLAGS[nationCode] ?? '🏳️'
