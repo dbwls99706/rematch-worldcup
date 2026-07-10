@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REMATCH 기획서 — 내가 축구 감독이라면</title>
+<style>
+  :root{
+    --green:#0f6b3f; --green-dark:#0a4d2d; --green-light:#e8f4ee;
+    --navy:#14213d; --ink:#1f2937; --sub:#5b6472; --line:#d8dee6;
+    --accent:#e07b00; --accent-light:#fdf1e2;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{font-size:15px;}
+  body{
+    font-family:'Pretendard','Noto Sans KR','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
+    color:var(--ink); line-height:1.7; background:#f0f2f5;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .page{
+    background:#fff; width:210mm; min-height:297mm; margin:24px auto;
+    padding:22mm 20mm; box-shadow:0 2px 14px rgba(0,0,0,.12); position:relative;
+  }
+  @page{size:A4; margin:0;}
+  @media print{
+    body{background:#fff;}
+    .page{width:100%; min-height:0; margin:0; padding:18mm 17mm; box-shadow:none; page-break-after:always;}
+    .page:last-child{page-break-after:auto;}
+  }
+
+  h1{font-size:2.1rem; line-height:1.3;}
+  h2{font-size:1.45rem; color:var(--green-dark); border-bottom:3px solid var(--green); padding-bottom:.4rem; margin-bottom:1.2rem; letter-spacing:-.01em;}
+  h2 .num{display:inline-block; background:var(--green); color:#fff; font-size:1rem; padding:.1rem .6rem; border-radius:6px; margin-right:.6rem; vertical-align:.15rem;}
+  h3{font-size:1.12rem; color:var(--navy); margin:1.5rem 0 .6rem;}
+  h3::before{content:"■"; color:var(--green); font-size:.7rem; margin-right:.5rem; vertical-align:.18rem;}
+  h4{font-size:1rem; color:var(--green-dark); margin:1rem 0 .4rem;}
+  p{margin-bottom:.7rem;}
+  ul,ol{margin:.3rem 0 .9rem 1.3rem;}
+  li{margin-bottom:.3rem;}
+  strong{color:var(--navy);}
+
+  table{width:100%; border-collapse:collapse; margin:.6rem 0 1.2rem; font-size:.88rem;}
+  th{background:var(--green); color:#fff; padding:.5rem .6rem; text-align:left; font-weight:600; border:1px solid var(--green-dark);}
+  td{padding:.5rem .6rem; border:1px solid var(--line); vertical-align:top;}
+  tr:nth-child(even) td{background:#f7faf8;}
+  table.plain th{background:var(--navy); border-color:#0d1830;}
+
+  .callout{background:var(--green-light); border-left:5px solid var(--green); padding: .9rem 1.1rem; border-radius:0 8px 8px 0; margin:.8rem 0 1.2rem;}
+  .callout.orange{background:var(--accent-light); border-color:var(--accent);}
+  .tagline{font-size:1.15rem; font-weight:700; color:var(--green-dark);}
+  .kv{display:grid; grid-template-columns:130px 1fr; gap:.35rem .8rem; margin:.6rem 0 1rem;}
+  .kv dt{font-weight:700; color:var(--green-dark);}
+  .badge{display:inline-block; background:var(--navy); color:#fff; font-size:.75rem; padding:.12rem .55rem; border-radius:99px; margin-right:.3rem;}
+  .badge.g{background:var(--green);}
+  .badge.o{background:var(--accent);}
+  .small{font-size:.85rem; color:var(--sub);}
+  .flow{display:flex; flex-wrap:wrap; gap:.4rem; align-items:center; margin:.8rem 0 1.1rem;}
+  .flow .step{background:#fff; border:2px solid var(--green); color:var(--green-dark); font-weight:700; padding:.45rem .8rem; border-radius:10px; font-size:.88rem; text-align:center;}
+  .flow .step.sub{border-style:dashed; font-weight:500; color:var(--sub); border-color:var(--line);}
+  .flow .arrow{color:var(--green); font-weight:900; font-size:1.1rem;}
+  code, .mono{font-family:Consolas,'D2Coding',monospace; font-size:.85em; background:#eef1f4; padding:.08em .35em; border-radius:4px;}
+  pre{font-family:Consolas,'D2Coding',monospace; font-size:.8rem; background:#0d1830; color:#d7e3f4; padding:1rem 1.2rem; border-radius:10px; overflow-x:auto; line-height:1.55; margin:.5rem 0 1.2rem;}
+  pre .c{color:#7d93b8;}
+
+  /* ---------- cover ---------- */
+  .cover{display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(160deg,#0a4d2d 0%, #0f6b3f 55%, #14894f 100%); color:#fff;}
+  .cover h1{font-size:3rem; margin:.4rem 0 .8rem; letter-spacing:-.02em;}
+  .cover .sub-title{font-size:1.25rem; opacity:.92; font-weight:500;}
+  .cover .pitch-deco{margin:2.2rem auto; width:150mm;}
+  .cover .meta{background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.3); border-radius:14px; padding:1.2rem 1.6rem; backdrop-filter:blur(2px);}
+  .cover .meta .kv dt{color:#c9e8d6;}
+  .cover .top-label{font-size:.95rem; letter-spacing:.25em; opacity:.85; font-weight:600;}
+
+  /* ---------- pitch mock ---------- */
+  .pitch{background:linear-gradient(180deg,#188a4e 0 50%, #14804a 50% 100%); border:3px solid #fff; outline:3px solid var(--green-dark); border-radius:6px; position:relative; width:100%; aspect-ratio:10/7;}
+  .pitch .half{position:absolute; left:0; right:0; top:50%; border-top:2px solid rgba(255,255,255,.85);}
+  .pitch .circle{position:absolute; left:50%; top:50%; width:18%; aspect-ratio:1; border:2px solid rgba(255,255,255,.85); border-radius:50%; transform:translate(-50%,-50%);}
+  .pitch .box{position:absolute; left:25%; width:50%; height:14%; border:2px solid rgba(255,255,255,.85);}
+  .pitch .box.top{top:-2px; border-top:none;}
+  .pitch .box.bottom{bottom:-2px; border-bottom:none;}
+  .dot{position:absolute; width:8.5%; aspect-ratio:1; border-radius:50%; background:#e11d48; border:2.5px solid #fff; color:#fff; font-weight:800; font-size:.62rem; display:flex; align-items:center; justify-content:center; transform:translate(-50%,-50%); box-shadow:0 2px 5px rgba(0,0,0,.35);}
+  .dot.blue{background:#1d4ed8;}
+  .dot .pos{position:absolute; bottom:-1.25rem; font-size:.55rem; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.6); white-space:nowrap; font-weight:600;}
+
+  /* ---------- wireframe ---------- */
+  .wire{border:2px solid var(--navy); border-radius:10px; overflow:hidden; font-size:.72rem; margin:.5rem 0 1.1rem; background:#fff;}
+  .wire .bar{background:var(--navy); color:#fff; padding:.3rem .7rem; font-weight:700; display:flex; justify-content:space-between;}
+  .wire .body{display:grid; gap:6px; padding:8px; background:#eef1f5;}
+  .wire .blk{background:#fff; border:1.5px dashed #9aa6b5; border-radius:6px; padding:.45rem .55rem; color:#435061;}
+  .wire .blk b{color:var(--navy); display:block; margin-bottom:.15rem;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:1rem;}
+  .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:.8rem;}
+
+  .footer-note{position:absolute; bottom:9mm; left:20mm; right:20mm; display:flex; justify-content:space-between; font-size:.72rem; color:#98a1ad; border-top:1px solid var(--line); padding-top:.35rem;}
+  @media print{.footer-note{position:static; margin-top:2rem;}}
+
+  .score-strip{display:flex; gap:.6rem; margin:.7rem 0 1rem;}
+  .score-card{flex:1; border:1.5px solid var(--line); border-radius:10px; padding:.7rem .8rem; text-align:center;}
+  .score-card .pt{font-size:1.5rem; font-weight:800; color:var(--green);}
+  .score-card .lb{font-size:.8rem; color:var(--sub);}
+  .toc{list-style:none; margin-left:0; counter-reset:toc;}
+  .toc>li{counter-increment:toc; display:flex; align-items:baseline; gap:.7rem; padding:.5rem .2rem; border-bottom:1px dashed var(--line); font-size:1.02rem;}
+  .toc>li::before{content:"0" counter(toc); font-weight:800; color:var(--green); font-family:Consolas,monospace;}
+  .toc>li:nth-child(n+10)::before{content:counter(toc);}
+  .toc .desc{margin-left:auto; font-size:.82rem; color:var(--sub);}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ COVER ═══════════════════════ -->
+<section class="page cover">
+  <div>
+    <div class="top-label">월간 해커톤 · 내가 축구 감독이라면 — 월드컵 전술 웹서비스 챌린지 · 기획서</div>
+    <h1>REMATCH<br>그날의 경기, 나의 전술로 다시.</h1>
+    <p class="sub-title">이미 끝난 실제 월드컵 경기의 벤치에 다시 앉아, 라인업과 전술을 내 손으로 바꾸고<br>"내가 감독이었다면"의 결과를 데이터 시뮬레이션으로 확인하는 인터랙티브 웹서비스</p>
+  </div>
+
+  <div class="pitch-deco">
+    <div class="pitch">
+      <div class="half"></div><div class="circle"></div>
+      <div class="box top"></div><div class="box bottom"></div>
+      <div class="dot" style="left:50%;top:93%;">GK</div>
+      <div class="dot" style="left:20%;top:76%;">LB</div>
+      <div class="dot" style="left:40%;top:80%;">CB</div>
+      <div class="dot" style="left:60%;top:80%;">CB</div>
+      <div class="dot" style="left:80%;top:76%;">RB</div>
+      <div class="dot" style="left:50%;top:62%;">DM</div>
+      <div class="dot" style="left:32%;top:52%;">CM</div>
+      <div class="dot" style="left:68%;top:52%;">CM</div>
+      <div class="dot" style="left:18%;top:36%;">LW</div>
+      <div class="dot" style="left:82%;top:36%;">RW</div>
+      <div class="dot" style="left:50%;top:30%;">ST</div>
+      <div class="dot blue" style="left:50%;top:8%;">ST</div>
+      <div class="dot blue" style="left:30%;top:14%;">LW</div>
+      <div class="dot blue" style="left:70%;top:14%;">RW</div>
+    </div>
+  </div>
+
+  <div class="meta">
+    <dl class="kv">
+      <dt>대회명</dt><dd>월간 해커톤: 내가 축구 감독이라면 — 월드컵 전술 웹서비스 챌린지</dd>
+      <dt>참가 구분</dt><dd>개인 참가 (닉네임2)</dd>
+      <dt>제출물</dt><dd>기획서 (서비스 개요 · 감독 경험 설계 의도 · 페이지 구성 · 핵심 인터랙션 명세 · 데이터 활용 방식 · 주요 사용 흐름 포함)</dd>
+      <dt>작성일</dt><dd>2026. 07. 07</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ═══════════════════════ TOC ═══════════════════════ -->
+<section class="page">
+  <h2><span class="num">목차</span>CONTENTS</h2>
+  <ul class="toc">
+    <li>서비스 개요 <span class="desc">한 줄 정의 · 문제의식 · 콘셉트 · 핵심 가치 · 타깃</span></li>
+    <li>"감독 경험" 설계 의도 <span class="desc">몰입 설계 3원칙 · 감독 여정 매핑</span></li>
+    <li>페이지 구성 <span class="desc">정보 구조(IA) · 6개 화면 상세 · 와이어프레임</span></li>
+    <li>핵심 인터랙션 명세 <span class="desc">INT-01 ~ INT-10 · 트리거/동작/피드백/예외</span></li>
+    <li>데이터 활용 방식 <span class="desc">데이터 구성 원칙 · 스키마 · 시뮬레이션 엔진 · 전술 상성 · AI 코치</span></li>
+    <li>주요 사용 흐름 <span class="desc">핵심 루프 · 사용자 시나리오 2종 · 상태 흐름도</span></li>
+    <li>기술 스택 및 아키텍처 <span class="desc">프론트엔드 단독 구성 · 배포 · 심사 접근성 보장</span></li>
+    <li>개발 일정 <span class="desc">7/7 ~ 8/3 주차별 마일스톤</span></li>
+    <li>평가 기준 대응 전략 <span class="desc">배점 항목별 설계 근거</span></li>
+    <li>규정 준수 · 리스크 관리 <span class="desc">저작권 · 외부 API · 제출 체크리스트</span></li>
+    <li>부록 <span class="desc">데이터 샘플(JSON) · 시연영상 구성안</span></li>
+  </ul>
+
+  <div class="callout" style="margin-top:2rem;">
+    <p class="tagline">"어제 끝난 그 경기, 오늘은 당신이 지휘합니다."</p>
+    <p style="margin:0;">2026 월드컵이 진행 중인 지금, 모든 축구 팬은 매일 밤 "내가 감독이라면"을 외칩니다.
+    REMATCH는 그 외침을 <strong>검증 가능한 경험</strong>으로 바꿉니다. 실제로 치러진 경기를 선택하고,
+    선수를 드래그해 배치하고, 전술을 지시하고, 경기 중에 교체 카드를 꺼내 든 뒤 —
+    실제 역사와 나의 결과를 나란히 비교합니다.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════ 1. 서비스 개요 ═══════════════════════ -->
+<section class="page">
+  <h2><span class="num">01</span>서비스 개요</h2>
+
+  <h3>한 줄 정의</h3>
+  <div class="callout">
+    <p style="margin:0;"><strong>REMATCH</strong>는 이미 끝난 실제 월드컵 경기의 감독석에 사용자를 다시 앉혀,
+    <strong>라인업 구성 → 전술 지시 → 경기 중 실시간 개입 → 실제 역사와의 결과 비교</strong>까지
+    감독의 의사결정 전 과정을 체험하게 하는 <strong>월드컵 리매치 시뮬레이터</strong>입니다.</p>
+  </div>
+
+  <h3>문제의식 — 왜 "리매치"인가</h3>
+  <p>축구 팬의 가장 보편적이고 강렬한 감정은 <strong>"만약에(What if)"</strong>입니다.
+  "저 선수를 왜 안 썼지?", "후반에 라인을 왜 안 내렸지?" — 그러나 이 가정은 지금까지 술자리 논쟁으로만 소비될 뿐,
+  <strong>검증할 방법이 없었습니다.</strong></p>
+  <ul>
+    <li>일반적인 전술 보드 서비스는 <strong>배치까지만</strong> 가능하고, 그 전술이 통했을지는 알 수 없습니다.</li>
+    <li>축구 게임(FM, FIFA)은 검증은 가능하지만 설치·구매·수십 시간의 학습이 필요합니다.</li>
+    <li>REMATCH는 이 사이의 공백을 노립니다 — <strong>브라우저에서 5분 안에, 설치 없이, 내 가설을 검증</strong>합니다.</li>
+  </ul>
+  <p>특히 대회 기간이 <strong>2026 월드컵 본선과 겹치는 지금</strong>, "어젯밤 그 경기"를 소재로 삼을 수 있다는 점이
+  이 콘셉트의 가장 강력한 시의성입니다.</p>
+
+  <h3>핵심 콘셉트 — 3단 구조</h3>
+  <table>
+    <tr><th style="width:18%;">단계</th><th style="width:27%;">이름</th><th>내용</th></tr>
+    <tr><td><strong>① 복기</strong></td><td>프리매치 브리핑</td><td>실제 경기의 데이터(포메이션, 스탯, 실점 장면)를 스카우팅 리포트 형태로 분석하며 "무엇이 문제였는지" 파악</td></tr>
+    <tr><td><strong>② 개입</strong></td><td>작전실 + 매치데이</td><td>드래그앤드롭 전술 보드로 나만의 라인업·전술을 구성하고, 분 단위 시뮬레이션 중 교체·전술 변경으로 실시간 개입</td></tr>
+    <tr><td><strong>③ 검증</strong></td><td>IF 리포트</td><td>실제 결과 vs 나의 결과를 나란히 비교하고, 감독 평점과 공유 가능한 결과 카드 획득</td></tr>
+  </table>
+
+  <h3>핵심 가치</h3>
+  <div class="grid3">
+    <div class="callout" style="margin:0;"><strong>검증되는 가설</strong><br><span class="small">"내가 감독이라면"이 말로 끝나지 않고 시뮬레이션 결과로 돌아옵니다.</span></div>
+    <div class="callout" style="margin:0;"><strong>결정의 무게</strong><br><span class="small">교체 카드 3장, 되돌릴 수 없는 선택 — 실제 감독처럼 자원이 제한됩니다.</span></div>
+    <div class="callout" style="margin:0;"><strong>공유되는 서사</strong><br><span class="small">"나는 가나전을 3:2로 뒤집었다" — 결과 카드가 대화의 소재가 됩니다.</span></div>
+  </div>
+
+  <h3>타깃 사용자</h3>
+  <table>
+    <tr><th style="width:22%;">타깃</th><th>특성</th><th style="width:32%;">REMATCH가 주는 것</th></tr>
+    <tr><td><strong>주 타깃</strong><br>라이트 축구 팬</td><td>월드컵 기간에만 축구를 보는 20~40대. 경기 후 SNS에서 감독 비판에 동참</td><td>설치·학습 없이 5분 만에 "내 전술"을 만들고 결과를 공유하는 재미</td></tr>
+    <tr><td><strong>부 타깃</strong><br>전술 애호가</td><td>FM 유저, 전술 분석 콘텐츠 소비자</td><td>전술 상성 시스템을 파고들어 최적해를 찾는 심화 플레이</td></tr>
+    <tr><td><strong>심사 관점</strong><br>대중 투표자</td><td>1차 평가의 투표 참여자</td><td>회원가입 없이 즉시 체험 → 결과 카드까지 도달하는 짧고 완결된 루프</td></tr>
+  </table>
+
+  <h3>서비스 범위 (해커톤 기간 내 완성 기준)</h3>
+  <ul>
+    <li><span class="badge g">필수</span> 경기 라이브러리 6경기(2026 월드컵 경기 중심 + 역대 명경기), 전술 보드, 시뮬레이션 엔진, 인게임 개입, 결과 비교 리포트</li>
+    <li><span class="badge o">확장</span> AI 코치(룰베이스 전술 추천), 하프타임 팀토크, 결과 카드 이미지 저장, 내 경기 아카이브(localStorage)</li>
+    <li><span class="badge">제외</span> 회원가입·서버 저장·멀티플레이 — 심사 규정(무가입 심사)과 기간을 고려해 의도적으로 배제</li>
+  </ul>
+
+  <div class="footer-note"><span>REMATCH — 월드컵 전술 웹서비스 챌린지 기획서</span><span>01. 서비스 개요</span></div>
+</section>
+
+<!-- ═══════════════════════ 2. 감독 경험 설계 의도 ═══════════════════════ -->
+<section class="page">
+  <h2><span class="num">02</span>"감독 경험" 설계 의도</h2>
+
+  <p>이 서비스의 목표는 전술 도구를 제공하는 것이 아니라 <strong>"감독이 된 기분"</strong>을 만드는 것입니다.
+  실제 감독의 경험을 구성하는 감정 요소를 분해하고, 각 요소를 UX 장치로 번역했습니다.</p>
+
+  <h3>몰입 설계 3원칙</h3>
+  <table>
+    <tr><th style="width:20%;">원칙</th><th style="width:40%;">감독의 실제 경험</th><th>UX 번역 장치</th></tr>
+    <tr>
+      <td><strong>① 결정의 무게</strong><br><span class="small">Weight of Decision</span></td>
+      <td>감독의 선택은 되돌릴 수 없고, 자원(교체 카드)은 유한하며, 모든 결정에 트레이드오프가 있다</td>
+      <td>· 교체 카드 <strong>3회 제한</strong>, 사용 즉시 소멸<br>· 킥오프 후 라인업 수정 불가<br>· 강한 압박 = 후반 체력 급감 등 <strong>모든 지시에 명시된 대가</strong></td>
+    </tr>
+    <tr>
+      <td><strong>② 즉각적 피드백</strong><br><span class="small">Visible Consequence</span></td>
+      <td>지시가 경기 흐름에 반영되는 것을 터치라인에서 눈으로 확인한다</td>
+      <td>· 전술 변경 후 <strong>점유율·기회 창출 게이지가 실시간 변화</strong><br>· 선수 배치 시 포지션 적합도 색상 피드백<br>· 이벤트 발생 시 해설 텍스트 + 피치 애니메이션</td>
+    </tr>
+    <tr>
+      <td><strong>③ 나만의 서사</strong><br><span class="small">Ownable Story</span></td>
+      <td>경기의 결과가 곧 감독의 이야기가 된다 — 명장 혹은 경질 대상</td>
+      <td>· 실제 역사 vs 나의 결과 <strong>나란히 비교</strong><br>· 감독 평점(S~F)과 언론 헤드라인 스타일 총평<br>· 이미지로 저장·공유 가능한 <strong>IF 리포트 카드</strong></td>
+    </tr>
+  </table>
+
+  <h3>감독 여정 매핑 — 실제 감독의 하루를 화면 흐름으로</h3>
+  <table>
+    <tr><th style="width:24%;">실제 감독의 여정</th><th style="width:22%;">대응 화면</th><th>사용자가 느끼는 감정</th></tr>
+    <tr><td>상대 분석 미팅</td><td>P2 프리매치 브리핑</td><td>"저 팀 왼쪽 측면이 약점이군" — 분석가의 통찰</td></tr>
+    <tr><td>라커룸 전술 보드</td><td>P3 작전실</td><td>"이 조합이면 된다" — 설계자의 확신</td></tr>
+    <tr><td>터치라인 90분</td><td>P4 매치데이</td><td>"지금이다, 교체!" — 승부사의 긴장</td></tr>
+    <tr><td>하프타임 라커룸</td><td>P4 하프타임 개입</td><td>"후반엔 다르게 간다" — 지도자의 결단</td></tr>
+    <tr><td>경기 후 기자회견</td><td>P5 IF 리포트</td><td>"역사를 바꿨다 / 역시 어렵구나" — 서사의 완성</td></tr>
+  </table>
+
+  <h3>몰입을 깨는 요소의 의도적 제거</h3>
+  <ul>
+    <li><strong>튜토리얼 화면 없음</strong> — 첫 경기 진입 시 화면 위 코치 말풍선 3개로 대체. 감독은 매뉴얼을 읽지 않습니다.</li>
+    <li><strong>숫자 과잉 배제</strong> — 능력치는 6각형 레이더와 3단계 색상으로만 노출. 스프레드시트가 아니라 벤치의 직감을 재현합니다.</li>
+    <li><strong>패배도 서사로</strong> — 졌을 때도 "실제보다 실점 1개 감소" 같은 부분 성취를 반드시 리포트에 표기해, 재도전 동기를 만듭니다.</li>
+    <li><strong>시뮬레이션 불확실성 유지</strong> — 같은 전술도 결과가 미세하게 달라지는 확률 모델(§5)로, "축구는 각본이 없다"는 감각을 보존합니다.</li>
+  </ul>
+
+  <div class="callout orange">
+    <strong>설계 검증 질문 (개발 중 상시 자가 점검)</strong><br>
+    <span class="small">① 이 화면에서 사용자는 "관람자"인가 "결정권자"인가? — 모든 화면에 최소 1개의 의사결정이 있어야 한다.<br>
+    ② 이 결정은 대가가 보이는가? — 대가 없는 결정은 클릭일 뿐, 지시가 아니다.<br>
+    ③ 결과를 자랑할 수 있는가? — 공유하고 싶지 않은 결과 화면은 다시 설계한다.</span>
+  </div>
+
+  <div class="footer-note"><span>REMATCH — 월드컵 전술 웹서비스 챌린지 기획서</span><span>02. 감독 경험 설계 의도</span></div>
+</section>
+
+<!-- ═══════════════════════ 3. 페이지 구성 ═══════════════════════ -->
+<section class="page">
+  <h2><span class="num">03</span>페이지 구성</h2>
+
+  <h3>정보 구조 (IA)</h3>
+  <div class="flow">
+    <div class="step">P1 홈<br><span class="small">경기 선택</span></div><span class="arrow">→</span>
+    <div class="step">P2 브리핑<br><span class="small">상대 분석</span></div><span class="arrow">→</span>
+    <div class="step">P3 작전실<br><span class="small">전술 보드</span></div><span class="arrow">→</span>
+    <div class="step">P4 매치데이<br><span class="small">시뮬레이션</span></div><span class="arrow">→</span>
+    <div class="step">P5 IF 리포트<br><span class="small">결과 비교</span></div>
+    <span class="arrow">⇄</span>
+    <div class="step sub">P6 아카이브<br><span class="small">내 기록(localStorage)</span></div>
+  </div>
+  <p class="small">단일 페이지 애플리케이션(SPA) — 화면 전환은 상태 기반이며 URL 라우팅(<code>/match/:id/briefing</code> 등)으로 새로고침에도 안전.
+  P2는 건너뛰기 가능(숙련자용), P4→P3 복귀는 불가(킥오프의 비가역성, 설계 원칙 ①).</p>
+
+  <div class="grid2">
+    <div>
+      <h3 style="margin-top:.6rem;">P1. 홈 — 경기 선택</h3>
+      <div class="wire">
+        <div class="bar"><span>REMATCH</span><span>아카이브 · 도움말</span></div>
+        <div class="body">
+          <div class="blk"><b>히어로</b>"어제 끝난 그 경기, 오늘은 당신이 지휘합니다" + 시작 CTA</div>
+          <div class="blk"><b>경기 카드 그리드 (6경기)</b>국기 · 스코어 · "이 경기를 뒤집을 수 있습니까?" · 난이도 별점 · 도전자 평균 결과</div>
+          <div class="blk"><b>내 최근 도전</b>이어하기 / 최고 평점</div>
+        </div>
+      </div>
+      <p class="small">경기 카드는 <strong>실제 결과를 도발적으로 제시</strong>해("대한민국 2 : 3 가나 — 정말 최선이었을까?") 도전 동기를 자극.</p>
+    </div>
+    <div>
+      <h3 style="margin-top:.6rem;">P2. 프리매치 브리핑 — 스카우팅</h3>
+      <div class="wire">
+        <div class="bar"><span>브리핑 | 대한민국 vs 가나</span><span>건너뛰기</span></div>
+        <div class="body">
+          <div class="blk"><b>실제 경기 요약</b>실제 포메이션 · 스코어 타임라인 · 주요 장면 텍스트</div>
+          <div class="blk"><b>상대 위협 분석</b>키플레이어 카드 · 공격 루트 히트맵(측면/중앙 비중 바)</div>
+          <div class="blk"><b>우리 팀 상태</b>스쿼드 컨디션 · 실제 감독의 선택과 결과</div>
+          <div class="blk"><b>CTA</b>"작전실로 이동" 버튼</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <h3>P3. 작전실 — 전술 보드 (핵심 화면)</h3>
+      <div class="wire">
+        <div class="bar"><span>작전실</span><span>AI 코치 · 프리셋 · 초기화</span></div>
+        <div class="body" style="grid-template-columns:1.3fr 1fr;">
+          <div class="blk" style="grid-row:span 3;"><b>인터랙티브 피치</b>드래그앤드롭 선수 배치<br>포지션 적합도 색상 표시<br>포메이션 그리드 스냅</div>
+          <div class="blk"><b>스쿼드 리스트</b>포지션 필터 · 능력치 레이더</div>
+          <div class="blk"><b>전술 지시 패널</b>수비라인 · 압박 · 빌드업 · 폭 · 템포 (5개 슬라이더)</div>
+          <div class="blk"><b>예상 전력 게이지</b>공격력/수비력/중원 장악 + 경고 배지</div>
+        </div>
+        <div class="bar" style="background:var(--green);"><span>포메이션: 4-2-3-1</span><span>▶ 킥오프 (확인 모달)</span></div>
+      </div>
+    </div>
+    <div>
+      <h3>P4. 매치데이 — 시뮬레이션</h3>
+      <div class="wire">
+        <div class="bar"><span>63' 대한민국 2 : 1 가나</span><span>배속 ×1 ×2 ×4</span></div>
+        <div class="body" style="grid-template-columns:1.3fr 1fr;">
+          <div class="blk" style="grid-row:span 2;"><b>라이브 피치</b>이벤트 애니메이션(볼 이동·슛·골)<br>모멘텀 게이지(주도권 시소)</div>
+          <div class="blk"><b>해설 피드</b>분 단위 텍스트 중계 · 주요 장면 하이라이트</div>
+          <div class="blk"><b>개입 패널</b>교체 카드 3장 · 전술 변경 · 일시정지</div>
+        </div>
+        <div class="bar" style="background:var(--accent);"><span>하프타임 — 팀토크 선택 + 전술 재조정</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <h3>P5. IF 리포트 — 결과 비교</h3>
+      <div class="wire">
+        <div class="bar"><span>IF 리포트</span><span>이미지 저장 · 재도전</span></div>
+        <div class="body">
+          <div class="blk"><b>헤드라인</b>"당신은 역사를 바꿨습니다 — 3:2 역전승" (언론 헤드라인 톤)</div>
+          <div class="blk"><b>실제 vs 나의 경기</b>스코어 · 점유율 · 슈팅 · xG 나란히 비교</div>
+          <div class="blk"><b>감독 평점 S~F</b>승부 결과 · 전술 적중 · 교체 효율 3축 산출</div>
+          <div class="blk"><b>결정적 장면 3</b>"67' 교체 투입한 OOO가 결승골" — 나의 개입이 만든 인과</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>P6. 아카이브 — 내 기록</h3>
+      <div class="wire">
+        <div class="bar"><span>내 감독 커리어</span><span>초기화</span></div>
+        <div class="body">
+          <div class="blk"><b>커리어 요약</b>총 전적 · 최고 평점 · 뒤집은 역사 수</div>
+          <div class="blk"><b>도전 기록 리스트</b>경기별 결과 카드 다시 보기 · 재도전</div>
+        </div>
+      </div>
+      <p class="small">localStorage 기반 — 서버·가입 없이 기록 보존. 심사 규정(무가입 평가)과 완전 호환.</p>
+    </div>
+  </div>
+
+  <div class="footer-note"><span>REMATCH — 월드컵 전술 웹서비스 챌린지 기획서</span><span>03. 페이지 구성</span></div>
+</section>
+
+<!-- ═══════════════════════ 4. 인터랙션 명세 ═══════════════════════ -->
+<section class="page">
+  <h2><span class="num">04</span>핵심 인터랙션 명세</h2>
+  <p>모든 인터랙션은 <strong>트리거 → 동작 → 피드백 → 예외 처리</strong> 4요소로 명세합니다.
+  마우스·터치를 <strong>포인터 이벤트로 통합 구현</strong>하여 데스크톱과 모바일에서 동일하게 동작합니다.</p>
+
+  <table style="font-size:.82rem;">
+    <tr><th style="width:9%;">ID</th><th style="width:16%;">인터랙션</th><th style="width:13%;">트리거</th><th style="width:26%;">동작</th><th style="width:20%;">피드백</th><th>예외 처리</th></tr>
+    <tr><td><strong>INT-01</strong></td><td>선수 드래그앤드롭 배치</td><td>선수 카드/토큰 드래그 (포인터)</td><td>스쿼드 리스트↔피치 간 이동, 피치 위 자유 배치. 포메이션 슬롯 반경 진입 시 그리드 스냅</td><td>드래그 중 고스트 토큰, 슬롯 하이라이트, 배치 시 <strong>포지션 적합도 색상</strong>(초록/노랑/빨강) + 진동성 스케일 애니메이션</td><td>이미 배치된 슬롯에 드롭 → 두 선수 자동 스왑. 피치 밖 드롭 → 원위치 복귀 애니메이션</td></tr>
+    <tr><td><strong>INT-02</strong></td><td>포메이션 프리셋 전환</td><td>프리셋 버튼 (4-3-3, 4-2-3-1, 3-4-3, 3-5-2, 4-4-2)</td><td>배치된 선수들이 새 포메이션 슬롯으로 재매핑</td><td>선수 토큰이 새 좌표로 <strong>동시 이동 애니메이션</strong>(300ms) — "화이트보드 위 자석" 감각</td><td>재매핑 시 적합도 하락 선수는 경고 배지 표시, 되돌리기 1회 지원</td></tr>
+    <tr><td><strong>INT-03</strong></td><td>전술 지시 슬라이더</td><td>5개 슬라이더 조작 (수비라인·압박·빌드업·폭·템포)</td><td>전술 파라미터 갱신 → 예상 전력 게이지 실시간 재계산</td><td>게이지 변화 + <strong>트레이드오프 문구</strong> 즉시 표시("강한 압박: 볼 탈취 ↑ / 후반 체력 ↓")</td><td>상성상 위험한 조합(높은 라인 + 상대 스피드 FW) → 주황 경고 배지 "역습 피격 위험"</td></tr>
+    <tr><td><strong>INT-04</strong></td><td>선수 카드 비교</td><td>선수 토큰 탭/클릭, 두 번째 선수 길게 누름</td><td>능력치 6각 레이더 팝오버, 2인 선택 시 레이더 겹쳐 비교</td><td>레이더 차트 드로잉 애니메이션, 우위 스탯 강조</td><td>비교 대상 미선택 시 단일 카드로 폴백</td></tr>
+    <tr><td><strong>INT-05</strong></td><td>AI 코치 추천</td><td>"AI 코치" 버튼</td><td>상대 데이터 기반 룰엔진이 추천 포메이션·지시·키맨을 <strong>근거 문장과 함께</strong> 제시. "적용" 시 보드에 반영</td><td>코치 말풍선 UI + 추천 근거("상대 좌측 풀백 공격 가담률 높음 → 우측 윙어에 스피드형 배치")</td><td>추천은 항상 수정 가능한 초안 — 강제 적용 없음. 사용자가 이미 배치한 선수는 유지 옵션 제공</td></tr>
+    <tr><td><strong>INT-06</strong></td><td>시뮬레이션 제어</td><td>재생/일시정지/배속(×1·×2·×4)</td><td>분 단위 틱 진행 속도 제어. 주요 이벤트(골·PK·퇴장)는 배속 무시하고 실시간 연출</td><td>시계·스코어보드 갱신, 이벤트 시 피치 애니메이션 + 해설 텍스트 자동 스크롤</td><td>탭 비활성화 시 자동 일시정지(브라우저 스로틀링 대응)</td></tr>
+    <tr><td><strong>INT-07</strong></td><td>인게임 교체</td><td>교체 카드(3장) 탭 → 벤치 선수를 필드 선수 위로 드래그</td><td>일시정지 → 교체 확정 시 다음 데드볼 타이밍에 반영, 카드 1장 소멸</td><td>전광판 스타일 교체 연출(OUT/IN), 남은 카드 수 강조</td><td>카드 소진 시 버튼 비활성 + "교체권을 모두 사용했습니다". 확정 전 취소 가능, 확정 후 불가</td></tr>
+    <tr><td><strong>INT-08</strong></td><td>하프타임 팀토크</td><td>45' 자동 진입</td><td>팀토크 3택(질책/독려/침착) + 전술 슬라이더 재조정 허용</td><td>선택지별 후반 15분간 모멘텀 보정치가 은근히 반영 — 결과 화면에서 효과 공개</td><td>60초 무입력 시 "침착" 자동 선택 후 진행(방치 대비)</td></tr>
+    <tr><td><strong>INT-09</strong></td><td>IF 리포트 카드 저장</td><td>"이미지 저장" 버튼</td><td>결과 카드를 Canvas로 렌더링 → PNG 다운로드</td><td>저장 완료 토스트 + 카드 반짝임 연출</td><td>Canvas 미지원/실패 시 스크린샷 안내 문구로 폴백</td></tr>
+    <tr><td><strong>INT-10</strong></td><td>실제 vs 나의 경기 비교 슬라이더</td><td>리포트 상단 좌우 드래그 슬라이더</td><td>실제 경기 요약 ↔ 나의 경기 요약 화면이 슬라이더 위치에 따라 교차 전환</td><td>스코어·스탯이 카운트업 애니메이션으로 교차</td><td>터치 미세 조작 어려움 대비 양끝 스냅 버튼 병행</td></tr>
+  </table>
+
+  <div class="callout">
+    <strong>인터랙션 공통 품질 기준</strong><br>
+    <span class="small">① 모든 조작 피드백은 100ms 이내 시작(체감 즉시성) ② 드래그는 포인터 이벤트 단일 구현으로 데스크톱·모바일 동일 보장
+    ③ 파괴적 행동(킥오프·교체 확정·기록 초기화)은 반드시 확인 단계 1회 ④ 키보드 접근 대체 수단(선수 선택 → 슬롯 선택 배치) 제공</span>
+  </div>
+
+  <div class="footer-note"><span>REMATCH — 월드컵 전술 웹서비스 챌린지 기획서</span><span>04. 핵심 인터랙션 명세</span></div>
+</section>
+
+<!-- ═══════════════════════ 5. 데이터 활용 방식 ═══════════════════════ -->
+<section class="page">
+  <h2><span class="num">05</span>데이터 활용 방식</h2>
+
+  <h3>데이터 구성 원칙</h3>
+  <ul>
+    <li><strong>대회 권장사항 준수:</strong> 외부 API를 사용하지 않고, 실제 월드컵 경기·선수 정보를 참고해 <strong>더미 데이터를 정적 JSON으로 직접 구성</strong>합니다. → 심사 시 API 키 문제·외부 장애 리스크 원천 차단.</li>
+    <li><strong>실제 데이터 "참조" 구조:</strong> 실제 경기의 스코어·포메이션·득점 타임라인 등 공개된 사실 정보를 참고해 작성하고, 선수 능력치는 공개 스탯 경향을 반영한 자체 산정값(0~99)을 사용합니다.</li>
+    <li><strong>경기 라이브러리(런칭 6경기):</strong> 2026 월드컵 대한민국 경기 등 진행 중인 대회의 화제 경기 2~3개 + 역대 명경기(2022 한국–가나, 2018 한국–독일, 2014 브라질–독일, 2002 한국–이탈리아 등)로 구성. 데이터 구조가 경기 수와 무관하게 확장 가능하도록 설계.</li>
+  </ul>
+
+  <h3>데이터 스키마 (정적 JSON 3종)</h3>
+  <table style="font-size:.85rem;">
+    <tr><th style="width:20%;">파일</th><th>핵심 필드</th></tr>
+    <tr><td><code>players.json</code></td><td>id, 이름, 국가, 포지션(주/부), 능력치 6종(<strong>스피드·패스·드리블·슛·수비·피지컬</strong>, 0~99), 체력(스태미나), 특성 태그(예: <code>counter_attacker</code>, <code>aerial_threat</code>)</td></tr>
+    <tr><td><code>teams.json</code></td><td>id, 국가명, 국기 코드, 스쿼드(선수 id 배열), 팀 스타일 태그, 상대 AI용 기본 전술 프로필</td></tr>
+    <tr><td><code>matches.json</code></td><td>id, 대회/일자, 홈·어웨이 팀, <strong>실제 결과</strong>(스코어·득점 타임라인·실제 포메이션·주요 스탯), 브리핑 텍스트(위협 분석·경기 서사), 난이도, 시뮬레이션 보정 계수</td></tr>
+  </table>
+
+  <h3>시뮬레이션 엔진 — 분 단위 확률 모델</h3>
+  <div class="flow">
+    <div class="step sub">매 분(틱)</div><span class="arrow">→</span>
+    <div class="step">① 중원 지배력 판정<br><span class="small">점유팀 결정</span></div><span class="arrow">→</span>
+    <div class="step">② 기회 생성 판정<br><span class="small">공격력×전술×체력</span></div><span class="arrow">→</span>
+    <div class="step">③ 기회 전개 트리<br><span class="small">돌파→슛→xG 판정</span></div><span class="arrow">→</span>
+    <div class="step">④ 이벤트 기록<br><span class="small">해설·애니메이션</span></div>
+  </div>
+  <ul style="font-size:.92rem;">
+    <li><strong>팀 전력 산출:</strong> <code>포지션별 (능력치 × 포지션 적합도) 가중합 × 전술 계수 × 체력 계수</code> — 사용자의 배치·지시가 곧바로 수식 입력값이 됩니다.</li>
+    <li><strong>체력 모델:</strong> 압박 강도·템포에 비례해 분당 체력 소모. 체력 70% 미만부터 능력치 하향 → <strong>교체 타이밍이 실질적 전략</strong>이 됩니다.</li>
+    <li><strong>xG 기반 슛 판정:</strong> 기회 품질(위치·상황)로 기대득점을 산출하고 슈터의 슛 능력치로 보정 — 결과 리포트의 스탯 비교와 일관된 체계.</li>
+    <li><strong>불확실성 설계:</strong> 시드 난수 기반 확률 판정. 동일 전술도 결과가 미세하게 달라지되, 전력 차이는 통계적으로 반드시 드러나도록 분산 상한 설정(밸런스 테스트: 동일 조건 500회 몬테카를로 자동 검증 스크립트).</li>
+    <li><strong>실제 경기 앵커링:</strong> 실제 라인업·전술을 그대로 쓰면 실제 결과 근방이 최빈값이 되도록 <code>matches.json</code>의 보정 계수로 캘리브레이션 — "실제 역사"가 시뮬레이션의 기준점이 됩니다.</li>
+  </ul>
+
+  <h3>전술 상성 매트릭스 (발췌)</h3>
+  <table style="font-size:.85rem;">
+    <tr><th style="width:26%;">나의 지시</th><th style="width:30%;">상대 조건</th><th>효과 (시뮬레이션 반영)</th></tr>
+    <tr><td>높은 수비 라인</td><td>스피드 85+ 공격수 보유</td><td>상대 역습 기회 질 +15% (위험) / 우리 공격 지역 압축 +10%</td></tr>
+    <tr><td>강한 전방 압박</td><td>상대 빌드업 = 숏패스</td><td>볼 탈취 기회 +12% / 우리 팀 분당 체력 소모 +25%</td></tr>
+    <tr><td>롱볼 빌드업</td><td>상대 CB 피지컬 열세</td><td>공중 경합 → 세컨볼 기회 +10% / 점유율 −8%p</td></tr>
+    <tr><td>측면 집중 공격</td><td>상대 풀백 공격 가담형</td><td>측면 배후 크로스 기회 +12% / 중앙 침투 −5%</td></tr>
+    <tr><td>낮은 템포 + 내린 라인</td><td>리드 중 후반</td><td>실점 확률 −10% / 추가득점 기회 −40% ("잠그기")</td></tr>
+  </table>
+  <p class="small">상성표는 데이터 파일(<code>tacticsMatrix.json</code>)로 분리해 밸런스 튜닝을 코드 수정 없이 수행. 전체 매트릭스는 5개 지시 × 상대 프로필 조합으로 정의합니다.</p>
+
+  <h3>AI 코치 — 외부 API 없는 룰베이스 추천</h3>
+  <p style="font-size:.92rem;">상대 팀 프로필 태그와 상성 매트릭스를 역방향 탐색해 <strong>기대효과 최대 조합을 근거 문장과 함께</strong> 제시합니다.
+  LLM API를 쓰지 않으므로 심사 규정("키 필요 기능은 평가 제한 가능")을 완전히 회피하며, 추천 근거가 상성표와 동일 체계라 <strong>추천 → 적용 → 결과의 인과가 일관</strong>됩니다.</p>
+
+  <div class="footer-note"><span>REMATCH — 월드컵 전술 웹서비스 챌린지 기획서</span><span>05. 데이터 활용 방식</span></div>
+</section>
+
+<!-- ═══════════════════════ 6. 주요 사용 흐름 ═══════════════════════ -->
+<section class="page">
+  <h2><span class="num">06</span>주요 사용 흐름</h2>
+
+  <h3>핵심 루프 (1회 플레이 ≈ 7~10분)</h3>
+  <div class="flow">
+    <div class="step">경기 선택</div><span class="arrow">→</span>
+    <div class="step">브리핑<br><span class="small">~1분</span></div><span class="arrow">→</span>
+    <div class="step">작전실<br><span class="small">2~4분</span></div><span class="arrow">→</span>
+    <div class="step">전반전<br><span class="small">~2분</span></div><span class="arrow">→</span>
+    <div class="step">하프타임</div><span class="arrow">→</span>
+    <div class="step">후반전<br><span class="small">~2분</span></div><span class="arrow">→</span>
+    <div class="step">IF 리포트</div><span class="arrow">→</span>
+    <div class="step sub">공유 / 재도전 / 다른 경기</div>
+  </div>
+
+  <h3>시나리오 A — 라이트 팬 "지훈" (28세, 월드컵 기간에만 축구 시청)</h3>
+  <table style="font-size:.86rem;">
+    <tr><th style="width:8%;">단계</th><th style="width:46%;">행동</th><th>시스템 반응 · 설계 의도</th></tr>
+    <tr><td>1</td><td>SNS에서 결과 카드를 보고 접속. 홈에서 "대한민국 2:3 가나 — 정말 최선이었을까?" 카드 클릭</td><td>회원가입·설치 없이 즉시 진입. 도발형 카피가 도전 동기 형성</td></tr>
+    <tr><td>2</td><td>브리핑에서 "가나의 득점 3골 중 2골이 크로스"라는 분석 확인</td><td>복잡한 데이터 대신 <strong>한 문장 통찰</strong> 중심 — 초보자도 전술 가설 수립 가능</td></tr>
+    <tr><td>3</td><td>작전실에서 AI 코치 추천(수비 라인 하향 + 제공권 좋은 CB 기용)을 받아 적용, 공격수 1명만 본인 취향으로 드래그 교체</td><td>추천은 초안, 최종 결정은 사용자 — "내 전술"이라는 소유감 유지 (INT-05)</td></tr>
+    <tr><td>4</td><td>후반 60분 1:1 상황에서 교체 카드로 스피드형 윙어 투입</td><td>모멘텀 게이지가 상승, 73분 역습 결승골 — 개입과 결과의 인과 체감 (INT-07)</td></tr>
+    <tr><td>5</td><td>IF 리포트 "당신은 역사를 바꿨습니다 — 2:1 승리" 확인, 결과 카드 저장 후 SNS 공유</td><td>공유 카드가 신규 유입 루프 형성 — 1차 대중투표 단계의 자생적 홍보 수단</td></tr>
+  </table>
+
+  <h3>시나리오 B — 전술 애호가 "민서" (34세, FM 유저)</h3>
+  <table style="font-size:.86rem;">
+    <tr><th style="width:8%;">단계</th><th style="width:46%;">행동</th><th>시스템 반응 · 설계 의도</th></tr>
+    <tr><td>1</td><td>AI 코치를 무시하고 3-4-3 하이프레스라는 본인 가설로 도전</td><td>경고 배지("역습 피격 위험")가 뜨지만 강제하지 않음 — 가설 검증의 자유</td></tr>
+    <tr><td>2</td><td>전반 우세했으나 65분부터 체력 저하로 실점, 1:1 무승부</td><td>체력 모델이 하이프레스의 대가를 정직하게 부과 — 시스템 신뢰 형성</td></tr>
+    <tr><td>3</td><td>재도전: 같은 전술 + 60분 선제적 3장 교체 플랜으로 2:0 승리</td><td>반복 플레이에서 <strong>학습과 개선</strong>이 성립 — 파고들 깊이 제공</td></tr>
+    <tr><td>4</td><td>아카이브에서 두 도전의 평점 비교, 남은 5경기 순차 도전</td><td>localStorage 기록이 수집 동기 부여 ("모든 역사를 S등급으로")</td></tr>
+  </table>
+
+  <h3>상태 흐름 및 예외 흐름</h3>
+  <ul style="font-size:.92rem;">
+    <li><strong>중도 이탈 복구:</strong> 작전실 편집 상태는 localStorage에 자동 저장 — 재접속 시 "이어서 준비하기" 제안. 경기 중 이탈 시엔 해당 경기는 무효 처리(비가역성 원칙 유지).</li>
+    <li><strong>미완성 라인업 킥오프 시도:</strong> 11명 미만/GK 미배치 시 킥오프 버튼 비활성 + 부족 슬롯 하이라이트.</li>
+    <li><strong>첫 방문자 온보딩:</strong> 최초 1회에 한해 작전실 진입 시 코치 말풍선 3개(배치 → 지시 → 킥오프)로 안내. "다시 보지 않기" 지원.</li>
+  </ul>
+
+  <div class="footer-note"><span>REMATCH — 월드컵 전술 웹서비스 챌린지 기획서</span><span>06. 주요 사용 흐름</span></div>
+</section>
+
+<!-- ═══════════════════════ 7~8. 기술 & 일정 ═══════════════════════ -->
+<section class="page">
+  <h2><span class="num">07</span>기술 스택 및 아키텍처</h2>
+  <table>
+    <tr><th style="width:22%;">영역</th><th style="width:38%;">선택</th><th>선정 이유</th></tr>
+    <tr><td>프레임워크</td><td>React 18 + TypeScript + Vite</td><td>바이브 코딩 도구와의 궁합, 빠른 반복, 타입 안정성</td></tr>
+    <tr><td>상태 관리</td><td>Zustand</td><td>전술 보드·시뮬레이션의 복잡한 상태를 경량으로 관리</td></tr>
+    <tr><td>드래그앤드롭</td><td>포인터 이벤트 기반 자체 구현 (필요시 dnd-kit)</td><td>마우스·터치 단일 코드 경로 — 크로스 디바이스 품질 확보</td></tr>
+    <tr><td>피치 렌더링</td><td>SVG + CSS 트랜지션 (framer-motion 보조)</td><td>반응형 스케일링 용이, 좌표계가 데이터와 1:1 대응</td></tr>
+    <tr><td>데이터</td><td>정적 JSON 번들 + localStorage</td><td>서버·DB·API 키 불필요 → 심사 접근성 100% 보장</td></tr>
+    <tr><td>배포</td><td>Vercel (정적 호스팅, 커스텀 도메인 불요)</td><td>상시 접근 가능 URL, 심사 기간 무중단</td></tr>
+    <tr><td>품질</td><td>Vitest(엔진 단위 테스트) + 몬테카를로 밸런스 스크립트</td><td>"동적 기능이 오류 없이 동작"(완성도 25점) 보증</td></tr>
+  </table>
+  <p class="small">아키텍처 핵심: <strong>시뮬레이션 엔진을 UI와 완전 분리된 순수 함수 모듈</strong>로 구현 —
+  (라인업, 전술, 시드) → 이벤트 로그 배열. 덕분에 엔진을 headless로 500회 돌리는 밸런스 검증이 가능하고, UI는 이벤트 로그의 재생기로 단순해집니다.</p>
+
+  <h2 style="margin-top:2rem;"><span class="num">08</span>개발 일정 (개인 참가 · 7/7 ~ 8/3)</h2>
+  <table>
+    <tr><th style="width:20%;">기간</th><th style="width:26%;">마일스톤</th><th>산출물</th></tr>
+    <tr><td><strong>W1</strong> 7/7 – 7/13</td><td>기반 구축</td><td>기획서 제출(즉시), 데이터 스키마·6경기 JSON 작성, 시뮬레이션 엔진 v1(headless) + 밸런스 스크립트, 작전실 드래그앤드롭 프로토타입</td></tr>
+    <tr><td><strong>W2</strong> 7/14 – 7/20</td><td>핵심 루프 완성</td><td>매치데이 화면(해설 피드·피치 애니메이션·교체·하프타임), IF 리포트 v1 — <strong>주말에 엔드투엔드 1회 플레이 성립</strong></td></tr>
+    <tr><td><strong>W3</strong> 7/21 – 7/27</td><td>완성도·차별화</td><td>브리핑 화면, AI 코치, 결과 카드 이미지 저장, 아카이브, 온보딩, 밸런스 튜닝 1차 <span class="small">(※ 7/27 10:00 기획서 마감 — 이미 제출 완료 상태)</span></td></tr>
+    <tr><td><strong>W4</strong> 7/28 – 8/2</td><td>QA·제출</td><td>크로스 브라우저(Chrome/Safari/Edge/모바일) 검증, 성능·접근성 점검, Vercel 배포 고정, README 정비, 시연영상 촬영·업로드, <strong>8/2 중 최종 제출(마감 8/3 10:00 대비 여유 확보)</strong></td></tr>
+  </table>
+  <div class="callout orange">
+    <strong>일정 방어 원칙</strong> — 범위 축소 우선순위를 사전 확정: 위기 시 <span class="small">아카이브 → 결과 카드 저장 → 하프타임 팀토크 → AI 코치</span> 순으로 제외하고,
+    <strong>선택-배치-시뮬레이션-비교의 핵심 루프는 어떤 경우에도 사수</strong>합니다. 8/3 10:00 이후 커밋 금지 규정에 대비해 8/2를 실질 마감으로 운영합니다.
+  </div>
+
+  <div class="footer-note"><span>REMATCH — 월드컵 전술 웹서비스 챌린지 기획서</span><span>07. 기술 · 08. 일정</span></div>
+</section>
+
+<!-- ═══════════════════════ 9~10. 평가 대응 & 규정 준수 ═══════════════════════ -->
+<section class="page">
+  <h2><span class="num">09</span>평가 기준 대응 전략</h2>
+  <div class="score-strip">
+    <div class="score-card"><div class="pt">30</div><div class="lb">참신성</div></div>
+    <div class="score-card"><div class="pt">25</div><div class="lb">감독 경험 설계</div></div>
+    <div class="score-card"><div class="pt">25</div><div class="lb">완성도</div></div>
+    <div class="score-card"><div class="pt">20</div><div class="lb">기획/구현 일관성</div></div>
+  </div>
+  <table style="font-size:.88rem;">
+    <tr><th style="width:22%;">평가 항목</th><th>REMATCH의 대응 설계</th></tr>
+    <tr><td><strong>참신성 (30)</strong></td><td>단순 전술 보드·추천을 넘어 <strong>"실제 역사를 앵커로 삼는 검증형 리매치"</strong>라는 고유 콘셉트. 2026 월드컵 진행 중이라는 시점과 결합해 "어제 경기 리매치"라는 다른 팀이 복제하기 어려운 경험 제시. 비교 슬라이더(INT-10), 언론 헤드라인형 리포트 등 디테일 차별화</td></tr>
+    <tr><td><strong>감독 경험 (25)</strong></td><td>몰입 3원칙(결정의 무게·즉각 피드백·나만의 서사)을 모든 화면에 적용(§2). 교체 카드 유한성, 킥오프 비가역성, 트레이드오프 명시 등 <strong>"감독의 긴장"을 메커니즘으로 구현</strong></td></tr>
+    <tr><td><strong>완성도 (25)</strong></td><td>엔진-UI 분리 아키텍처 + 몬테카를로 자동 밸런스 검증 + 크로스 브라우저 QA 주간 확보. 외부 API 0개로 장애 요인 제거. 범위 축소 우선순위 사전 확정으로 미완성 기능 노출 방지</td></tr>
+    <tr><td><strong>기획/구현 일관성 (20)</strong></td><td>본 기획서의 인터랙션 ID(INT-01~10)·화면 ID(P1~P6)를 코드·README·시연영상 챕터와 <strong>동일 체계로 유지</strong> — 심사자가 기획 의도와 구현을 1:1로 대조 가능</td></tr>
+  </table>
+  <p class="small">1차 대중투표(제출팀 60%·참가팀 20%·대중 20%) 대응: 결과 카드 공유 루프가 자연 유입을 만들고, 무가입 즉시 플레이 구조로 투표자의 체험 문턱을 최소화합니다.</p>
+
+  <h2 style="margin-top:1.6rem;"><span class="num">10</span>규정 준수 · 리스크 관리</h2>
+  <table style="font-size:.86rem;">
+    <tr><th style="width:26%;">항목</th><th>준수 방안</th></tr>
+    <tr><td>저작권 — 이미지</td><td>선수 사진 미사용. <strong>이니셜 아바타 + 국기 이모지/자체 제작 SVG</strong>로 대체. 아이콘은 lucide(ISC 라이선스)</td></tr>
+    <tr><td>저작권 — 폰트</td><td>Pretendard(OFL) 셀프 호스팅</td></tr>
+    <tr><td>선수·국가 명예</td><td>실명은 사실 정보(소속·포지션) 참조로만 사용, 능력치는 자체 산정임을 명시. 비하·조롱 표현 전면 배제, 패배 서사도 중립적 어휘로 작성</td></tr>
+    <tr><td>외부 API</td><td><strong>사용하지 않음</strong> — 심사자 별도 키 불필요, "키 필요 기능 평가 제한" 규정 리스크 0</td></tr>
+    <tr><td>무가입·무결제 심사</td><td>회원가입·결제 없음. localStorage만 사용</td></tr>
+    <tr><td>제출물</td><td>배포 URL(Vercel) + GitHub 저장소(실행 방법·기술 스택 README) + 유튜브 시연영상. <strong>8/3 10:00 이후 커밋 절대 금지</strong>(8/2 코드 프리즈)</td></tr>
+    <tr><td>리스크: 시뮬레이션 밸런스 붕괴</td><td>파라미터 외부화(tacticsMatrix.json) + 500회 몬테카를로 검증으로 극단 결과(7:0 등) 상한 통제</td></tr>
+    <tr><td>리스크: 모바일 드래그 품질</td><td>포인터 이벤트 단일 구현 + 탭 선택-배치 대체 UX 병행 (INT-01 예외 경로)</td></tr>
+    <tr><td>리스크: 개인 참가 일정</td><td>W2 말 엔드투엔드 성립을 중간 관문으로 설정, 미달 시 즉시 범위 축소 발동</td></tr>
+  </table>
+
+  <div class="footer-note"><span>REMATCH — 월드컵 전술 웹서비스 챌린지 기획서</span><span>09. 평가 대응 · 10. 규정 준수</span></div>
+</section>
+
+<!-- ═══════════════════════ 부록 ═══════════════════════ -->
+<section class="page">
+  <h2><span class="num">11</span>부록</h2>
+
+  <h3>A. 데이터 샘플 (발췌)</h3>
+  <pre>// players.json
+{ "id": "kr_son", "name": "손흥민", "nation": "KR", "positions": ["LW","ST"],
+  "stats": { "pace": 88, "pass": 84, "dribble": 87, "shot": 90, "defense": 43, "physical": 72 },
+  "stamina": 82, "traits": ["counter_attacker", "clutch"] }
+
+// matches.json
+{ "id": "wc2022_kor_gha", "title": "2022 카타르 · 조별리그 H조",
+  "home": "KR", "away": "GH", "realScore": [2, 3],
+  "realFormation": { "KR": "4-2-3-1", "GH": "4-4-2" },
+  "realTimeline": [ {"min": 24, "team": "GH", "type": "goal", "note": "크로스 → 헤더"}, "..." ],
+  "briefing": { "threat": "득점 3골 중 2골이 측면 크로스에서 발생", "keyman": "gh_kudus" },
+  "difficulty": 3, "calibration": { "homeAtk": 1.02, "awayAtk": 1.05 } }
+
+// tacticsMatrix.json
+{ "rule": "high_line_vs_pace", "if": { "my.defLine": "high", "opp.maxFwPace": ">=85" },
+  "effect": { "opp.counterQuality": "+0.15", "my.attackZone": "+0.10" },
+  "warn": "역습 피격 위험 — 상대 최전방 스피드가 빠릅니다" }</pre>
+
+  <h3>B. 시연영상 구성안 (3분 내외, 유튜브)</h3>
+  <table style="font-size:.86rem;">
+    <tr><th style="width:14%;">시간</th><th style="width:26%;">챕터</th><th>내용</th></tr>
+    <tr><td>0:00–0:20</td><td>인트로</td><td>서비스 시작 화면, 한 줄 콘셉트("그날의 경기, 나의 전술로 다시")</td></tr>
+    <tr><td>0:20–0:50</td><td>경기 선택·브리핑</td><td>경기 카드 선택 → 상대 위협 분석 확인 (P1–P2)</td></tr>
+    <tr><td>0:50–1:40</td><td>작전실</td><td>드래그앤드롭 배치, 포메이션 전환, 전술 슬라이더, AI 코치 (INT-01/02/03/05)</td></tr>
+    <tr><td>1:40–2:30</td><td>매치데이</td><td>시뮬레이션 진행, 교체 개입, 하프타임, 득점 장면 (INT-06/07/08)</td></tr>
+    <tr><td>2:30–3:00</td><td>IF 리포트</td><td>실제 vs 나의 결과 비교 슬라이더, 감독 평점, 결과 카드 저장 (INT-09/10)</td></tr>
+  </table>
+  <p class="small">규정 요구사항(시작 화면 · 선수 배치/전술 설정 · 핵심 인터랙션 · 결과 화면) 전 항목 포함.</p>
+
+  <h3>C. 용어 정리</h3>
+  <table style="font-size:.86rem;">
+    <tr><th style="width:22%;">용어</th><th>정의</th></tr>
+    <tr><td>IF 리포트</td><td>실제 경기 결과와 사용자 시뮬레이션 결과를 비교하는 최종 결과 화면 및 공유 카드</td></tr>
+    <tr><td>모멘텀 게이지</td><td>경기 주도권을 시각화한 시소형 게이지 — 전술 개입의 효과를 즉시 보여주는 핵심 피드백 장치</td></tr>
+    <tr><td>포지션 적합도</td><td>선수의 주/부 포지션과 배치 슬롯의 일치 정도(초록/노랑/빨강) — 전력 산출 가중치에 반영</td></tr>
+    <tr><td>앵커링(보정)</td><td>실제 라인업 입력 시 실제 결과가 최빈값이 되도록 하는 시뮬레이션 캘리브레이션</td></tr>
+  </table>
+
+  <div class="callout" style="margin-top:1.6rem;">
+    <p class="tagline" style="margin-bottom:.3rem;">맺음말</p>
+    <p style="margin:0;">REMATCH는 "내가 감독이라면"이라는 모든 팬의 혼잣말을, 데이터로 검증되고 이야기로 공유되는 경험으로 완성합니다.
+    본 기획서의 화면 ID(P1–P6)와 인터랙션 ID(INT-01–10)는 최종 산출물의 코드·README·시연영상과 동일한 체계로 유지되어,
+    기획과 구현의 일관성을 끝까지 보증합니다.</p>
+  </div>
+
+  <div class="footer-note"><span>REMATCH — 월드컵 전술 웹서비스 챌린지 기획서</span><span>11. 부록 · 끝</span></div>
+</section>
+
+</body>
+</html>
