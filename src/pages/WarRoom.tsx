@@ -316,8 +316,8 @@ export default function WarRoom() {
           >
             <h3>킥오프 하시겠습니까?</h3>
             <p className="muted">
-              킥오프 이후에는 라인업과 포메이션을 되돌릴 수 없습니다. 경기 중에는 교체 카드 3장과 하프타임 조정으로만
-              개입할 수 있습니다.
+              킥오프 이후에는 선발 라인업을 되돌릴 수 없습니다. 경기 중에는 교체 카드 3장과 전술·포메이션 변경,
+              하프타임 조정으로 개입할 수 있습니다.
             </p>
             <div className="confirm-actions">
               <button className="btn ghost" onClick={() => setShowKick(false)}>

@@ -72,6 +72,7 @@ h4 {
 
 a {
   color: inherit;
+  text-decoration: none;
 }
 
 ::selection {
@@ -261,13 +262,14 @@ a {
   gap: 0.5rem;
 }
 
+/* 주의: 여기서 transform을 애니메이션하면 페이지 루트가 fixed 요소(모달·드래그 고스트)의
+   기준이 되어 뷰포트 중앙 정렬이 깨진다 — opacity만 사용할 것 */
 .fade-in {
   animation: fadeIn 0.4s ease both;
 }
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
 }
 

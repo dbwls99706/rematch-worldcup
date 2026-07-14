@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { PLAYERS } from '../data/players'
-import { MATCHES } from '../data/matches'
+import { MATCHES, getMatch } from '../data/matches'
 import { TEAMS, getTeam } from '../data/teams'
 import { FORMATIONS } from '../data/formations'
 import { buildAutoSetup } from './lineup'
@@ -97,7 +97,7 @@ describe('전술 계수 & 상성', () => {
 
 describe('시뮬레이션', () => {
   it('결정적: 같은 시드는 같은 결과', () => {
-    const m = MATCHES[0]
+    const m = getMatch('wc2022_kor_gha')
     const home = buildAutoSetup(getTeam(m.home), byId)
     const away = buildAutoSetup(getTeam(m.away), byId)
     const r1 = simulateFull({ match: m, home, away, byId, seed: 777 })
@@ -106,7 +106,7 @@ describe('시뮬레이션', () => {
     expect(r1.events.length).toBe(r2.events.length)
   })
   it('밸런스: 500회에서 극단적 대량득점이 드물다', () => {
-    const m = MATCHES[0]
+    const m = getMatch('wc2022_kor_gha')
     const home = buildAutoSetup(getTeam(m.home), byId)
     const away = buildAutoSetup(getTeam(m.away), byId)
     let blowouts = 0
@@ -122,7 +122,7 @@ describe('시뮬레이션', () => {
     expect(avgGoals).toBeLessThan(4.5)
   })
   it('교체는 카드를 소모하고 3장으로 제한된다', () => {
-    const m = MATCHES[0]
+    const m = getMatch('wc2022_kor_gha')
     const home = buildAutoSetup(getTeam(m.home), byId)
     const away = buildAutoSetup(getTeam(m.away), byId)
     const eng = new MatchEngine({ match: m, home, away, byId, seed: 1 })
@@ -134,17 +134,32 @@ describe('시뮬레이션', () => {
     expect(eng.subsLeftFor('home')).toBe(0)
     expect(eng.substitute('home', onPitch[7], bench[3])).toBe(false) // 카드 소진
   })
+  it('경기 중 포메이션 변경은 같은 11명을 새 슬롯에 재배치한다', () => {
+    const m = getMatch('wc2022_kor_gha')
+    const home = buildAutoSetup(getTeam(m.home), byId, '4-2-3-1')
+    const away = buildAutoSetup(getTeam(m.away), byId)
+    const eng = new MatchEngine({ match: m, home, away, byId, seed: 1 })
+    const before = new Set(Object.values(eng.sideSetup('home').lineup))
+    eng.setFormation('home', '4-4-2')
+    const setup = eng.sideSetup('home')
+    expect(setup.formationName).toBe('4-4-2')
+    const after = Object.values(setup.lineup)
+    expect(after).toHaveLength(11)
+    expect(new Set(after)).toEqual(before) // 인원 변동 없음
+    expect(FORMATIONS['4-4-2'].slots.every((s) => setup.lineup[s.id])).toBe(true) // 전 슬롯 충원
+    expect(byId[setup.lineup['gk']].positions[0]).toBe('GK') // GK 유지
+  })
 })
 
 describe('감독 평점', () => {
   it('패배를 승리로 뒤집으면 triumph', () => {
-    const m = MATCHES[0] // 실제 2:3 패
+    const m = getMatch('wc2022_kor_gha') // 실제 2:3 패
     const r = computeRating(m, [3, 1], { possession: 55, shots: [12, 8], shotsOnTarget: [6, 3], xg: [2.1, 1.0] }, 2)
     expect(r.verdict).toBe('triumph')
     expect(['S', 'A']).toContain(r.grade)
   })
   it('실점을 줄이면 성취로 기록된다', () => {
-    const m = MATCHES[3] // 실제 1:7 (bra_ger)
+    const m = getMatch('wc2014_bra_ger') // 실제 1:7
     const r = computeRating(m, [1, 2], { possession: 45, shots: [10, 12], shotsOnTarget: [4, 5], xg: [1.2, 1.8] }, 3)
     expect(r.achievements.some((a) => a.includes('실점'))).toBe(true)
   })

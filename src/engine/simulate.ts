@@ -1,7 +1,8 @@
-import type { Match, MatchStats, Player, SimEvent, Side, Tactics, TeamSetup } from './types'
+import type { FormationName, Match, MatchStats, Player, SimEvent, Side, Tactics, TeamSetup } from './types'
 import { RNG } from './rng'
 import { computePower, type TeamPower } from './strength'
 import { applyMatrix, deriveMods, type TeamMods } from './tactics'
+import { autoAssign } from './lineup'
 import { getTeam } from '../data/teams'
 
 type ById = Record<string, Player>
@@ -324,6 +325,19 @@ export class MatchEngine {
     const s = side === 'home' ? this.home : this.away
     s.setup = { ...s.setup, tactics }
     this.recomputeSide(s, side === 'home' ? this.cfg.match.away : this.cfg.match.home)
+  }
+
+  /** 경기 중 포메이션 변경 — 그라운드의 11명을 새 포메이션 슬롯에 재배치 */
+  setFormation(side: Side, formationName: FormationName) {
+    const s = side === 'home' ? this.home : this.away
+    if (s.setup.formationName === formationName) return
+    const onPitchIds = Object.values(s.setup.lineup).filter(Boolean)
+    const lineup = autoAssign(onPitchIds, formationName, this.cfg.byId)
+    s.setup = { ...s.setup, formationName, lineup }
+    s.slotOf = {}
+    for (const [slotId, pid] of Object.entries(lineup)) s.slotOf[pid] = slotId
+    this.recomputeSide(s, side === 'home' ? this.cfg.match.away : this.cfg.match.home)
+    this.pushEvent(side, 'info', `📋 ${this.minute}' 포메이션 변경 — ${formationName}`, false)
   }
 
   /** 하프타임 팀토크 (INT-08) → 후반 초반 모멘텀 보정 */

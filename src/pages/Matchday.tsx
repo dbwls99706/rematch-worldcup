@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowLeftRight, FastForward, Flag as FlagIcon, Pause, Play, Sliders } from 'lucide-react'
 import { BY_ID, getMatch, getTeam, useGame } from '../store/useGame'
-import { FORMATIONS } from '../data/formations'
+import { FORMATIONS, FORMATION_NAMES } from '../data/formations'
 import Pitch, { shortName } from '../components/Pitch'
 import Flag from '../components/Flag'
 import TacticsPanel from '../components/TacticsPanel'
@@ -24,6 +24,7 @@ export default function Matchday() {
   const resumeSecondHalf = useGame((s) => s.resumeSecondHalf)
   const substitute = useGame((s) => s.substitute)
   const changeTactics = useGame((s) => s.changeTactics)
+  const changeFormation = useGame((s) => s.changeFormation)
   const finishToReport = useGame((s) => s.finishToReport)
 
   const match = getMatch(matchId)
@@ -222,7 +223,16 @@ export default function Matchday() {
       </AnimatePresence>
 
       {/* 하프타임 */}
-      {halftime && <Halftime home={home.short} score={state.score} tactics={homeSetup.tactics} onResume={resumeSecondHalf} />}
+      {halftime && (
+        <Halftime
+          home={home.short}
+          score={state.score}
+          tactics={homeSetup.tactics}
+          formationName={homeSetup.formationName}
+          onFormation={changeFormation}
+          onResume={resumeSecondHalf}
+        />
+      )}
 
       {/* 교체 모달 */}
       {showSub && (
@@ -250,6 +260,18 @@ export default function Matchday() {
             <p className="muted" style={{ marginBottom: '1rem', fontSize: '.85rem' }}>
               변경은 즉시 남은 경기에 반영됩니다.
             </p>
+            <div className="section-title">포메이션</div>
+            <div className="wr-formations" style={{ marginBottom: '1rem' }}>
+              {FORMATION_NAMES.map((f) => (
+                <button
+                  key={f}
+                  className={`fbtn ${homeSetup.formationName === f ? 'on' : ''}`}
+                  onClick={() => changeFormation(f)}
+                >
+                  {f}
+                </button>
+              ))}
+            </div>
             <TacticsPanel tactics={homeSetup.tactics} onChange={(t) => changeTactics({ ...homeSetup.tactics, ...t })} />
             <div className="confirm-actions" style={{ marginTop: '1rem' }}>
               <button className="btn primary" onClick={() => { setShowTac(false); play() }}>
@@ -278,11 +300,15 @@ function Halftime({
   home,
   score,
   tactics,
+  formationName,
+  onFormation,
   onResume,
 }: {
   home: string
   score: [number, number]
   tactics: import('../engine/types').Tactics
+  formationName: import('../engine/types').FormationName
+  onFormation: (f: import('../engine/types').FormationName) => void
   onResume: (boost: number, tactics?: import('../engine/types').Tactics) => void
 }) {
   const [talk, setTalk] = useState<number | null>(null)
@@ -326,6 +352,15 @@ function Halftime({
             <button key={t.k} className={`talk-card ${talk === t.k ? 'on' : ''}`} onClick={() => setTalk(t.k)}>
               <b>{t.label}</b>
               <span>{t.desc}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="section-title" style={{ marginTop: '1rem' }}>포메이션 재조정 (선택)</div>
+        <div className="wr-formations">
+          {FORMATION_NAMES.map((f) => (
+            <button key={f} className={`fbtn ${formationName === f ? 'on' : ''}`} onClick={() => onFormation(f)}>
+              {f}
             </button>
           ))}
         </div>

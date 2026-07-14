@@ -73,6 +73,7 @@ interface GameState {
   resumeSecondHalf: (talkBoost: number, tactics?: Tactics) => void
   substitute: (outId: string, inId: string) => boolean
   changeTactics: (t: Tactics) => void
+  changeFormation: (f: FormationName) => void
   finishToReport: () => void
 
   // ── archive / onboarding ──
@@ -252,6 +253,13 @@ export const useGame = create<GameState>((set, get) => ({
     const { setup } = get()
     if (setup) set({ setup: { ...setup, tactics: t } })
     set({ tick: get().tick + 1 })
+  },
+
+  changeFormation: (f) => {
+    const { engine } = get()
+    if (!engine) return
+    engine.setFormation('home', f)
+    set({ setup: engine.sideSetup('home'), tick: get().tick + 1 })
   },
 
   finishToReport: () => {
