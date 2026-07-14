@@ -42,7 +42,7 @@ export type Trait =
 export interface Player {
   id: string
   name: string
-  nation: string // ISO-ish code used to look up flag emoji
+  nation: string // ISO-ish code used to look up the SVG flag
   number: number
   positions: Position[] // 첫 항목이 주 포지션
   stats: Stats

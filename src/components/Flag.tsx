@@ -109,6 +109,23 @@ const FLAGS: Record<string, JSX.Element> = {
       <polygon points="18,7.4 18.7,9.5 20.9,9.5 19.1,10.8 19.8,12.9 18,11.6 16.2,12.9 16.9,10.8 15.1,9.5 17.3,9.5" fill="#D21034" />
     </>
   ),
+  // 체코 — 백/적 가로 + 청색 삼각(호이스트)
+  CZ: (
+    <>
+      <rect width="30" height="10" fill="#fff" />
+      <rect y="10" width="30" height="10" fill="#D7141A" />
+      <polygon points="0,0 15,10 0,20" fill="#11457E" />
+    </>
+  ),
+  // 멕시코 — 녹/백/적 세로 삼색 + 중앙 문장
+  MX: (
+    <>
+      <rect width="30" height="20" fill="#fff" />
+      <rect width="10" height="20" fill="#006847" />
+      <rect x="20" width="10" height="20" fill="#CE1126" />
+      <circle cx="15" cy="10" r="2.8" fill="#8C6239" />
+    </>
+  ),
   // 우루과이 — 백/청 줄무늬 + 태양 칸톤
   UY: (
     <>

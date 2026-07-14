@@ -192,6 +192,21 @@ function drawFlag(ctx: CanvasRenderingContext2D, code: string, x: number, y: num
       circle(ctx, x + w * 0.54, cy, h * 0.175, '#fff')
       star(ctx, x + w * 0.62, cy, h * 0.11, '#D21034')
       break
+    case 'CZ':
+      box('#fff', 0, 0, w, h / 2)
+      box('#D7141A', 0, h / 2, w, h / 2)
+      ctx.fillStyle = '#11457E'
+      ctx.beginPath()
+      ctx.moveTo(x, y)
+      ctx.lineTo(x + w / 2, cy)
+      ctx.lineTo(x, y + h)
+      ctx.closePath()
+      ctx.fill()
+      break
+    case 'MX':
+      box('#fff'); box('#006847', 0, 0, w / 3); box('#CE1126', (2 * w) / 3, 0, w / 3)
+      circle(ctx, cx, cy, h * 0.14, '#8C6239')
+      break
     default:
       box('#64748b')
   }

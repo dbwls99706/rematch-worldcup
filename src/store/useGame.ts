@@ -17,7 +17,6 @@ import {
   saveArchive,
   setOnboarded,
 } from '../lib/persist'
-import { flag } from '../data/teams'
 
 const BY_ID: Record<string, Player> = Object.fromEntries(PLAYERS.map((p) => [p.id, p]))
 
@@ -306,4 +305,4 @@ export const playersById = BY_ID
 export function allMatches(): Match[] {
   return MATCHES
 }
-export { flag, getTeam, getMatch, BY_ID }
+export { getTeam, getMatch, BY_ID }

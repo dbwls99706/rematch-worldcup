@@ -235,7 +235,7 @@ export const PLAYERS: Player[] = [
   p('uru10_fernandez', '알바로 페르난데스', 'UY', 8, ['RW', 'AM'], [84, 72, 78, 66, 54, 64], 82, ['sprinter']),
   p('uru10_scotti', '스코티', 'UY', 14, ['CB', 'DM'], [72, 64, 54, 44, 78, 80], 82, []),
 
-  // ─────────────── 대한민국 2026 (vs 남아프리카공화국 · 가상 시나리오) ───────────────
+  // ─────────────── 대한민국 2026 (2026 월드컵 A조 · vs 체코·멕시코·남아공) ───────────────
   p('kr26_johw', '조현우', 'KR', 21, ['GK'], [62, 64, 46, 20, 84, 78], 85, ['wall', 'clutch']),
   p('kr26_seolyw', '설영우', 'KR', 15, ['RB', 'LB'], [88, 76, 80, 52, 76, 72], 88, ['engine', 'sprinter']),
   p('kr26_kimmj', '김민재', 'KR', 4, ['CB'], [83, 76, 66, 48, 91, 88], 88, ['wall', 'aerial_threat', 'clutch']),
@@ -254,7 +254,7 @@ export const PLAYERS: Player[] = [
   p('kr26_honghs', '홍현석', 'KR', 16, ['CM'], [76, 80, 76, 68, 66, 68], 84, ['engine', 'playmaker']),
   p('kr26_kimsg', '김승규', 'KR', 1, ['GK'], [58, 62, 44, 20, 80, 80], 83, ['wall']),
 
-  // ─────────────── 남아프리카공화국 2026 (vs 대한민국 · 가상 시나리오) ───────────────
+  // ─────────────── 남아프리카공화국 2026 (vs 대한민국 · A조 3차전) ───────────────
   p('rsa26_williams', '론웬 윌리엄스', 'ZA', 1, ['GK'], [66, 66, 48, 22, 84, 82], 85, ['wall', 'clutch']),
   p('rsa26_mudau', '무다우', 'ZA', 2, ['RB'], [88, 70, 74, 48, 76, 76], 88, ['sprinter', 'engine']),
   p('rsa26_kekana', '케카나', 'ZA', 5, ['CB'], [76, 68, 58, 44, 80, 82], 84, ['aerial_threat']),
@@ -270,6 +270,40 @@ export const PLAYERS: Player[] = [
   p('rsa26_makgopa', '막고파', 'ZA', 17, ['ST'], [80, 66, 70, 76, 44, 82], 82, ['aerial_threat', 'target_man']),
   p('rsa26_appollis', '아폴리스', 'ZA', 19, ['RW', 'LW'], [88, 74, 84, 70, 48, 58], 82, ['sprinter']),
   p('rsa26_hlongwane', '흘롱와네', 'ZA', 20, ['ST', 'RW'], [90, 68, 78, 74, 46, 66], 84, ['sprinter', 'counter_attacker']),
+
+  // ─────────────── 체코 2026 (vs 대한민국 · A조 1차전) ───────────────
+  p('cze26_stanek', '스타네크', 'CZ', 1, ['GK'], [64, 66, 46, 22, 82, 82], 84, ['wall']),
+  p('cze26_coufal', '초우팔', 'CZ', 22, ['RB'], [84, 72, 70, 48, 78, 78], 88, ['engine']),
+  p('cze26_hranac', '흐라나치', 'CZ', 3, ['CB'], [74, 70, 56, 42, 80, 84], 84, ['aerial_threat']),
+  p('cze26_krejci', '크레이치', 'CZ', 6, ['CB', 'DM'], [80, 74, 66, 58, 82, 84], 86, ['aerial_threat', 'set_piece', 'clutch']),
+  p('cze26_jurasek', '유라세크', 'CZ', 14, ['LB'], [86, 74, 74, 50, 72, 72], 86, ['engine']),
+  p('cze26_holes', '홀레스', 'CZ', 20, ['DM', 'CB'], [78, 74, 66, 54, 80, 82], 88, ['ball_winner', 'engine']),
+  p('cze26_soucek', '수체크', 'CZ', 8, ['CM', 'DM'], [74, 76, 68, 76, 76, 88], 88, ['aerial_threat', 'engine', 'set_piece']),
+  p('cze26_provod', '프로보트', 'CZ', 21, ['LW', 'AM'], [86, 80, 82, 74, 56, 66], 84, ['counter_attacker', 'sprinter']),
+  p('cze26_barak', '바라크', 'CZ', 15, ['AM', 'CM'], [76, 80, 80, 74, 62, 74], 84, ['clutch']),
+  p('cze26_sulc', '슐츠', 'CZ', 10, ['AM', 'RW'], [82, 80, 82, 76, 58, 66], 84, ['playmaker']),
+  p('cze26_schick', '시크', 'CZ', 9, ['ST'], [78, 72, 74, 84, 46, 84], 82, ['aerial_threat', 'target_man', 'clutch']),
+  // bench
+  p('cze26_hlozek', '흘로제크', 'CZ', 7, ['ST', 'LW'], [86, 76, 82, 76, 50, 72], 82, ['sprinter', 'counter_attacker']),
+  p('cze26_cerny', '체르니', 'CZ', 11, ['RW', 'LW'], [88, 76, 82, 74, 50, 60], 82, ['sprinter']),
+  p('cze26_chory', '호리', 'CZ', 13, ['ST'], [72, 64, 64, 74, 44, 88], 80, ['aerial_threat', 'target_man']),
+
+  // ─────────────── 멕시코 2026 (vs 대한민국 · A조 2차전) ───────────────
+  p('mex26_malagon', '말라곤', 'MX', 1, ['GK'], [64, 68, 48, 22, 82, 80], 84, ['wall']),
+  p('mex26_sanchez', '호르헤 산체스', 'MX', 19, ['RB'], [86, 72, 74, 50, 74, 72], 86, ['engine', 'sprinter']),
+  p('mex26_montes', '몬테스', 'MX', 3, ['CB'], [76, 72, 58, 52, 82, 84], 84, ['aerial_threat', 'set_piece']),
+  p('mex26_vasquez', '바스케스', 'MX', 5, ['CB'], [80, 72, 60, 46, 82, 82], 84, ['aerial_threat', 'wall']),
+  p('mex26_gallardo', '가야르도', 'MX', 23, ['LB'], [86, 74, 74, 50, 74, 72], 86, ['engine']),
+  p('mex26_alvarez', '에드손 알바레스', 'MX', 4, ['DM', 'CB'], [80, 80, 72, 60, 84, 84], 90, ['ball_winner', 'engine']),
+  p('mex26_romo', '루이스 로모', 'MX', 6, ['CM', 'DM'], [78, 78, 74, 68, 76, 78], 86, ['engine', 'clutch']),
+  p('mex26_pineda', '피네다', 'MX', 8, ['CM', 'AM'], [76, 82, 80, 72, 66, 68], 86, ['playmaker', 'set_piece']),
+  p('mex26_lozano', '로사노', 'MX', 22, ['RW', 'LW'], [92, 78, 86, 80, 50, 66], 84, ['sprinter', 'counter_attacker', 'clutch']),
+  p('mex26_gimenez', '산티 히메네스', 'MX', 9, ['ST'], [86, 72, 78, 82, 48, 80], 86, ['sprinter', 'clutch', 'aerial_threat']),
+  p('mex26_quinones', '퀴뇨네스', 'MX', 25, ['LW', 'ST'], [88, 72, 80, 78, 48, 76], 84, ['sprinter', 'counter_attacker']),
+  // bench
+  p('mex26_vega', '베가', 'MX', 10, ['AM', 'LW'], [82, 80, 84, 74, 54, 64], 82, ['playmaker', 'set_piece']),
+  p('mex26_jimenez', '라울 히메네스', 'MX', 20, ['ST'], [74, 72, 70, 80, 46, 82], 82, ['aerial_threat', 'target_man']),
+  p('mex26_rodriguez', '카를로스 로드리게스', 'MX', 7, ['CM'], [76, 78, 74, 64, 72, 74], 86, ['engine']),
 
   // ─────────────── 대한민국 2014 (vs 알제리) ───────────────
   p('kr14_jungsr', '정성룡', 'KR', 1, ['GK'], [60, 60, 44, 20, 78, 80], 83, ['wall']),

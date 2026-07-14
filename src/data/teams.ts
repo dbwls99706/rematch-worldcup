@@ -254,6 +254,42 @@ export const TEAMS: Record<string, Team> = {
       tags: ['pace', 'organized', 'counter', 'underrated'],
     },
   },
+  cze26: {
+    id: 'cze26',
+    name: '체코 2026',
+    short: '체코',
+    nationCode: 'CZ',
+    color: '#d7141a',
+    defaultFormation: '4-2-3-1',
+    squad: [
+      'cze26_stanek', 'cze26_coufal', 'cze26_hranac', 'cze26_krejci', 'cze26_jurasek',
+      'cze26_holes', 'cze26_soucek', 'cze26_provod', 'cze26_barak', 'cze26_sulc',
+      'cze26_schick', 'cze26_hlozek', 'cze26_cerny', 'cze26_chory',
+    ],
+    profile: {
+      style: '수체크·홀레스의 중원 장악과 시크의 제공권 — 세트피스와 피지컬이 강점',
+      maxFwPace: 88, buildup: 'mixed', fullbackJoin: 'mid', aerialWeak: false,
+      tags: ['physical', 'set_piece', 'aerial', 'organized'],
+    },
+  },
+  mex26: {
+    id: 'mex26',
+    name: '멕시코 2026',
+    short: '멕시코',
+    nationCode: 'MX',
+    color: '#006341',
+    defaultFormation: '4-3-3',
+    squad: [
+      'mex26_malagon', 'mex26_sanchez', 'mex26_montes', 'mex26_vasquez', 'mex26_gallardo',
+      'mex26_alvarez', 'mex26_romo', 'mex26_pineda', 'mex26_lozano', 'mex26_gimenez',
+      'mex26_quinones', 'mex26_vega', 'mex26_jimenez', 'mex26_rodriguez',
+    ],
+    profile: {
+      style: '개최국의 열기 속 알바레스의 중원 보호와 로사노·히메네스의 전방 스피드',
+      maxFwPace: 92, buildup: 'mixed', fullbackJoin: 'high', aerialWeak: false,
+      tags: ['host', 'organized', 'counter', 'clinical'],
+    },
+  },
   kr14: {
     id: 'kr14',
     name: '대한민국 2014',
@@ -296,13 +332,4 @@ export function getTeam(id: string): Team {
   const t = TEAMS[id]
   if (!t) throw new Error(`Unknown team id: ${id}`)
   return t
-}
-
-// 국가 코드 → 국기 이모지
-const FLAGS: Record<string, string> = {
-  KR: '🇰🇷', GH: '🇬🇭', DE: '🇩🇪', IT: '🇮🇹', BR: '🇧🇷',
-  AR: '🇦🇷', FR: '🇫🇷', UY: '🇺🇾', ZA: '🇿🇦', DZ: '🇩🇿',
-}
-export function flag(nationCode: string): string {
-  return FLAGS[nationCode] ?? '🏳️'
 }
